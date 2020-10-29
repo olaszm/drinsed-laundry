@@ -1,32 +1,88 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <Header />
+    <div @click="closeCart">
+      <MobileMenu />
+      <router-view />
+      <Footer />
     </div>
-    <router-view/>
+    <Cart />
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
+<script>
+
+import Cart from "@/components/Cart";
+import MobileMenu from "@/components/MobileMenu";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { mapState, mapActions } from "vuex";
+export default {
+  components: { Header, Footer, Cart, MobileMenu },
+  created() {
+    this.$Progress.start()
+    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.cookie = `TimeZone=${timeZone}; secure;`;
+    console.log(process.env.VUE_APP_URL)
+
+
+
+     this.$router.beforeEach((to,from,next)=> {
+       if(to.name != 'pricing'){
+         this.$Progress.start()
+       }
+       next()
+     })
+
+     
+
+     this.$router.afterEach((to)=> {
+
+      if(to.name != 'pricing'){
+          this.$Progress.finish()
+     }
+     })
+  },
+  methods: {
+    ...mapActions(["toggleCart", "toggleMenu",'loadFromLocalStorage']),
+    closeCart() {
+      if (this.isCartOpen) {
+        this.toggleCart();
+      }
+    },
+    closeMenu() {
+      if (this.isMenuOpen) {
+        this.toggleMenu();
+      }
+    },
+  },
+  computed: {
+    ...mapState(["isCartOpen", "isMenuOpen"]),
+  },
+  mounted() {
+    this.$Progress.finish()
+    document.addEventListener("click", (e) => {
+      // if (!e.target.className.includes("cart") && this.isCartOpen) {
+      //   this.toggleCart();
+      // }
+      // console.log(e.target);
+      if (!e.target.className.includes("mobile-menu") && this.isMenuOpen) {
+        this.toggleMenu();
+      }
+    });
+   
+
+   this.loadFromLocalStorage()
+  },
+};
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import "@/styles/main.scss";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.router-link-exact-active {
+  color: $primary;
+  font-weight: 400;
 }
 </style>

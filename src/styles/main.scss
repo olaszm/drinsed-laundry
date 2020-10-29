@@ -1,0 +1,91 @@
+@import "./normalize";
+@import "./variables";
+
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../public/fonts/GothamRoundedMedium.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../public/fonts/GothamRoundedLight.otf") format("opentype");
+  font-weight: 300;
+  font-style: lighter;
+}
+
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../public/fonts/GothamRoundedBold.otf") format("opentype");
+  font-weight: 500;
+  font-style: bold;
+}
+
+html,
+body {
+  font-family: "Gotham Rounded", sans-serif;
+  font-weight: lighter;
+  background-color: white;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+p {
+  line-height: 150%;
+}
+
+li {
+  list-style: none;
+}
+
+.link {
+  color: $primary;
+}
+
+.error {
+  font-weight: 400;
+  color: $error !important;
+}
+
+.success {
+  font-weight: 400;
+  color: $success !important;
+}
+
+.primary {
+  color: $primary;
+  &-bold {
+    font-weight: 400;
+  }
+}
+
+.wrapper {
+  width: 60%;
+  margin: 0 auto;
+
+  @media (max-width: $desktop) {
+    width: 75%;
+  }
+
+  @media (max-width: $tablet) {
+    width: 90%;
+  }
+
+  @media (max-width: $mobile) {
+    width: 95%;
+  }
+}

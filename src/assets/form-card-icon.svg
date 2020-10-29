@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" width="37" height="37">
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #13b0a7 } 
+		.txt1 { font-size: 20px;line-height: 28px;fill: #ffffff;font-family: "Font Awesome";text-anchor: middle } 
+	</style>
+	<g id="Payment Details">
+		<g id="Details">
+			<g id="Payment">
+				<g id="icon">
+					<path id="Ellipse 6" class="shp0" d="M18.5 0C28.72 0 37 8.28 37 18.5C37 28.72 28.72 37 18.5 37C8.28 37 0 28.72 0 18.5C0 8.28 8.28 0 18.5 0Z" />
+					<text id="" style="opacity: 0.702;transform: matrix(1,0,0,1,18,25)" >
+						<tspan x="0" y="0" class="txt1"></tspan>
+					</text>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
