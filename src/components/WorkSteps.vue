@@ -21,7 +21,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin: 1rem 2rem;
+  margin: 0rem 0.5rem;
   h3 {
     margin: 1rem 0;
     margin-bottom: 2.5rem;
@@ -46,13 +46,13 @@ export default {
     max-width: 300px;
   }
   img {
-    // width: 100%;
     height: auto;
-    // width: 100%;
+    width: 100%;
+    // width: auto;
   }
 
-  @media (max-width: $mobile) {
-    margin: 1rem auto;
+  @media (max-width: $tablet) {
+    margin: 1.5rem auto;
   }
 }
 </style>

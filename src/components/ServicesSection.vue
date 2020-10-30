@@ -57,8 +57,8 @@ export default {
         details_price: "£14.95",
         details_body:
           "Ironing only service requires your items to be pre-washed. We will press, pack and deliver them back to you on hangers.",
-        // details_img: "laundry.png",
-        details_img: "laundry-service.png",
+
+        details_img: "laundry-service.svg",
       },
       services: [
         {
@@ -71,8 +71,7 @@ export default {
           details_price: "£14.95",
           details_body:
             "Washed at 30◦, tumble dried at medium heat, packed together, and delivered to you. Max 8kg per laundry load.",
-          // details_img: "laundry.png",
-          details_img: "laundry-service.png",
+          details_img: "laundry-service.svg",
         },
         {
           title: "Laundry With Ironing",
@@ -84,8 +83,7 @@ export default {
           details_price: "£1.00",
           details_body:
             "Laundry and Ironing for any garment, just a click away",
-          // details_img: "laundry-with-ironing.png",
-          details_img: "laundry-and ironing.png",
+          details_img: "laundry-and ironing-service.svg",
         },
         {
           title: "Dry Cleaning",
@@ -98,8 +96,7 @@ export default {
           details_price: "£2.50",
           details_body:
             "Eco - friendly dry cleaning for your suits, dresses, coats, knitwear, and more.",
-          // details_img: "dry-cleaning.png",
-          details_img: "laundry-dry-cleaning.png",
+          details_img: "dry-cleaning-service.svg",
         },
         {
           title: "Home and Bedding",
@@ -112,8 +109,8 @@ export default {
           details_price: "£3.00",
           details_body:
             "Home Bedding cleaned and pressed to a high quality, including duvets and blankets.",
-          // details_img: "home-and-beding.png",
-          details_img: "laundry-home-and-bedding.png",
+
+          details_img: "home-and-bedding.svg",
         },
         {
           title: "Ironing Only",
@@ -126,8 +123,8 @@ export default {
           details_price: "£14.95",
           details_body:
             "Ironing only service requires your items to be pre-washed. We will press, pack and deliver them back to you on hangers.",
-          // details_img: "ironing-only.png",
-          details_img: "laundry-ironing-only.png",
+
+          details_img: "ironing-service.svg",
         },
       ],
     };
@@ -175,6 +172,7 @@ section {
     }
   }
   .services__content {
+    margin-top: 2rem;
     margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
@@ -194,9 +192,11 @@ section {
       border-radius: 4px;
       box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
       img {
+        max-height: 500px;
         width: 100%;
         height: 100%;
         object-fit: contain;
+        object-position: bottom;
       }
       &__details {
         padding: 0 2rem;

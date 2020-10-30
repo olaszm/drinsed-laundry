@@ -9,13 +9,13 @@
           directly to your door.
         </p>
       </div>
-      <div class="how__progress-bar">
+      <!-- <div class="how__progress-bar">
         <img
           class="progress-bar"
           src="@/assets/progress-bar.png"
           alt="How We Work Steps"
         />
-      </div>
+      </div> -->
       <div class="how__steps__container">
         <WorkSteps
           v-for="(step, index) in steps"
@@ -58,8 +58,7 @@ export default {
         },
         {
           title: "We Deliver",
-          text:
-            "We’ll deliver your items to you in as little as 48 hours.",
+          text: "We’ll deliver your items to you in as little as 48 hours.",
           url: "step-3.svg",
         },
       ],
@@ -74,8 +73,7 @@ section {
   background: url("../assets/how-we-work-bg.svg") no-repeat 100%;
   background-size: 100% 100%;
   background-color: #f7f9fc;
-
-  min-height: 100vh;
+  min-height: 80vh;
   height: 100%;
   width: 100%;
   display: grid;
@@ -84,7 +82,7 @@ section {
 }
 
 .how__text {
-  margin: 5rem auto;
+  margin: 2rem auto;
   text-align: center;
   max-width: 800px;
   h2 {
@@ -105,21 +103,21 @@ section {
   }
 }
 
-.progress-bar {
-  @media (max-width: $desktop) {
-    // height: 45px;
-    width: 80%;
-  }
-  @media (max-width: $tablet) {
-    display: none;
-  }
-}
+// .progress-bar {
+//   @media (max-width: $desktop) {
+//     // height: 45px;
+//     width: 80%;
+//   }
+//   @media (max-width: $tablet) {
+//     display: none;
+//   }
+// }
 
 .how__steps__container {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   // margin: 0;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
@@ -130,6 +128,6 @@ section {
 }
 
 button {
-  margin-bottom: 5rem;
+  margin: 2.5rem 0;
 }
 </style>
