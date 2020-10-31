@@ -32,6 +32,8 @@
                       v-model="form.phone"
                       :error="errors.phone"
                       label="Phone number"
+                      pattern="^\d{10}$"
+                      max="10"
                     />
                   </div>
 
@@ -223,8 +225,8 @@ export default {
       } else if (!this.validEmail(this.form.email)) {
         this.errors.email = "Valid email required!";
       }
-      if (this.form.phone.length < 9) {
-        this.errors.phone = "Phone number required!";
+      if (this.form.phone.length < 10) {
+        this.errors.phone = "Valid phone number required!";
       }
       if (this.location.postCode.length < 1) {
         this.errors.postCode = "Post code required!";

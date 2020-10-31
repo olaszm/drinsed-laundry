@@ -90,18 +90,11 @@ export default {
   data() {
     return {
       images: [
-        "hero-section-1.webp",
         "hero-section-2.webp",
         "hero-section-3.webp",
         "hero-section-4.webp",
-        "hero-section-5.webp",
+        "hero-section-5.png",
       ],
-      //     images: [
-      //       'test-1.png',
-      //       'test-2.png',
-      //       'test-3.png',
-      //       'test-4.png',
-      // ],
       time: null,
       currentIndex: 0,
     };
@@ -210,6 +203,7 @@ export default {
   width: 0.75rem;
   border-radius: 50%;
   margin: 0.5em 0em;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
 }
 .active-dot {
   opacity: 1;

@@ -68,11 +68,17 @@ export default {
     h4 {
       font-weight: 400;
     }
+
     div {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       width: 65px;
+      margin-left: 0.5em;
+      p {
+        white-space: nowrap;
+        margin-right: 0.5em;
+      }
     }
   }
   &__items {
@@ -80,12 +86,24 @@ export default {
     text-align: left;
     padding: 0 0.5rem;
     tr {
-      display: flex;
-      justify-content: space-between;
-      margin: 0.75rem 0;
-      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
       width: 100%;
+      margin: 0.75rem 0;
       position: relative;
+      td,
+      th {
+        &:first-child {
+          justify-self: start;
+        }
+        &:nth-child(2) {
+          justify-self: center;
+        }
+        &:last-child {
+          justify-self: end;
+        }
+      }
       &::after {
         content: "";
         position: absolute;

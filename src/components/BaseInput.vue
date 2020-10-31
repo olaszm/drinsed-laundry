@@ -7,12 +7,14 @@
         v-if="logo"
       />
       <input
+        :pattern="pattern"
         :aria-label="label"
         :type="type"
         :placeholder="placeholder"
         :value="value"
         @input="$emit('input', $event.target.value)"
         :id="name"
+        :maxlength="max"
       />
     </div>
     <p class="error" v-if="error">{{ error }}</p>
@@ -39,7 +41,9 @@ export default {
     },
     value: {},
     name: {},
+    pattern: {},
     error: {},
+    max: {},
   },
   data() {
     return {

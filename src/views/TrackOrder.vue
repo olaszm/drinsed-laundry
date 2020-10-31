@@ -47,7 +47,7 @@
             </div>
             <div class="container__row">
               <h4>Phone Number</h4>
-              <p>{{ user.phone_number }}</p>
+              <p>{{ user.phone_number ? `0${user.phone_number}` : "" }}</p>
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default {
   &__details {
     width: 100%;
     margin: 0.5rem 2rem;
-    @media (max-width: $tablet) {
+    @media (max-width: $desktop) {
       margin: 0.5rem 0;
     }
     h3 {
