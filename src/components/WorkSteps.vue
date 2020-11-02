@@ -46,6 +46,7 @@ export default {
     max-width: 300px;
   }
   img {
+    min-height: 300px;
     height: auto;
     width: 100%;
     // width: auto;
