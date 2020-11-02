@@ -1,5 +1,6 @@
 <template>
   <section class="download">
+    <img class="stamp" src="@/assets/stamp.svg" alt="" />
     <div class="download__inner wrapper">
       <img
         class="mobile-mockup"
@@ -32,6 +33,19 @@ section {
   display: grid;
   align-items: center;
   justify-items: center;
+}
+
+.stamp {
+  position: absolute;
+  top: -10%;
+  right: 10%;
+  height: 150px;
+  @media (max-width: $tablet) {
+    height: 125px;
+  }
+  @media (max-width: $mobile) {
+    height: 100px;
+  }
 }
 
 .download__inner {
