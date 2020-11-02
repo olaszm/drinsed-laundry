@@ -93,7 +93,7 @@ export default {
         "hero-section-2.webp",
         "hero-section-3.webp",
         "hero-section-4.webp",
-        "hero-section-5.png",
+        "hero-section-5.webp",
       ],
       time: null,
       currentIndex: 0,
@@ -196,7 +196,7 @@ export default {
 .dots {
   display: inline-block;
   position: relative;
-  z-index: 20;
+  z-index: 9;
   opacity: 0.4;
   background-color: white;
   height: 0.75rem;

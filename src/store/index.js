@@ -9,6 +9,10 @@ export default new Vuex.Store({
   state: {
     isMenuOpen: false,
     isCartOpen: false,
+    voucher: {
+      isApplied: false,
+      discount: 0,
+    },
     isAgreedToTerms: false,
     isSubscribeChecked: false,
     cart: [],
@@ -41,6 +45,10 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    SET_VOUCHER(state, payload){
+        state.voucher.isApplied = payload.isApplied
+        state.voucher.discount = payload.discount
+    },
     SET_AGREED_TO_TERMS(state) {
       state.isAgreedToTerms = !state.isAgreedToTerms;
     },
@@ -70,6 +78,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    setVoucher({commit},payload){
+      payload.discount =   (100 - payload.discount) / 100
+      commit('SET_VOUCHER', payload)
+    },
     setAgreedToTerms({ commit }) {
       commit("SET_AGREED_TO_TERMS");
     },
@@ -242,7 +254,7 @@ export default new Vuex.Store({
         .reduce((acc, curr) => {
           return (acc += curr.price * curr.quantity);
         }, 0)
-        .toFixed(2);
+        .toFixed(2)*state.voucher.discount;
     },
     getCartLength: (state) => {
       return state.cart.length;

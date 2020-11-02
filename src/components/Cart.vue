@@ -9,22 +9,25 @@
           </div>
         </div>
         <div class="cart__inner__container">
- 
           <CartItem v-for="(item, index) in cart" :key="index" :item="item" />
         </div>
 
         <div class="cart__inner__footer" v-if="getCartLength != 0">
+          <div class="total" v-if="voucher.isApplied">
+            <h3>Discount:</h3>
+            <h3>{{ 100 - voucher.discount * 100 }}%</h3>
+          </div>
           <div class="total">
             <h3>Total:</h3>
             <h3>£{{ calculateTotalPrice }}</h3>
           </div>
           <div class="error-container" v-if="error">
-              <p class="error">{{this.error}}</p>
+            <p class="error">{{ this.error }}</p>
           </div>
           <div class="button">
-              <BaseButton class="btn-secondary" @click.native='toPayment'>
-                <span slot="text">Proceed to Checkout</span>
-              </BaseButton>
+            <BaseButton class="btn-secondary" @click.native="toPayment">
+              <span slot="text">Proceed to Checkout</span>
+            </BaseButton>
           </div>
         </div>
         <div class="cart__inner__footer" v-else>
@@ -52,23 +55,23 @@ export default {
   },
   data() {
     return {
-      error: ''
-    }
+      error: "",
+    };
   },
   computed: {
     ...mapGetters(["calculateTotalPrice", "getCartLength"]),
-    ...mapState(["isCartOpen", "cart"]),
+    ...mapState(["isCartOpen", "cart", "voucher"]),
   },
   methods: {
     ...mapActions(["toggleCart"]),
-    toPayment(){
-      if(this.calculateTotalPrice >= 20){
-            this.toggleCart()
-             this.$router.push('/checkout')
+    toPayment() {
+      if (this.calculateTotalPrice >= 20) {
+        this.toggleCart();
+        this.$router.push("/checkout");
       } else {
-        this.error = 'Minimum order is £20' 
+        this.error = "Minimum order is £20";
       }
-    }
+    },
   },
 };
 </script>

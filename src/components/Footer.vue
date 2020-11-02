@@ -17,7 +17,9 @@
         <div class="footer__navigation__terms">
           <ul>
             <li>
-              <router-link to="/covid-19">COVID-19 Resources</router-link>
+              <router-link to="/covid-resources"
+                >COVID-19 Resources</router-link
+              >
             </li>
             <li>
               <router-link to="/terms">Terms and Conditions</router-link>
@@ -39,30 +41,32 @@
         </div>
 
         <div class="footer__content__social">
-          <img class="footer__content__social__logo" src="@/assets/logo-white-small.png" alt="Drinsed Logo" />
-          <p>
-            On-demand laundry and dry cleaning direct to your door.
-          </p>
+          <img
+            class="footer__content__social__logo"
+            src="@/assets/logo-white-small.png"
+            alt="Drinsed Logo"
+          />
+          <p>On-demand laundry and dry cleaning direct to your door.</p>
           <div class="footer__content__social__links">
             <div class="logo">
               <a href="#" aria-label="Facebook Logo">
                 <i class="fab fa-facebook-f"></i>
-              </a >
+              </a>
             </div>
             <div class="logo">
-                  <a href="#" aria-label="LinkedIn Logo">
-              <i class="fab fa-linkedin"></i>
-                  </a>
+              <a href="#" aria-label="LinkedIn Logo">
+                <i class="fab fa-linkedin"></i>
+              </a>
             </div>
             <div class="logo">
-                  <a href="#" aria-label="Instagram Logo">
-              <i class="fab fa-instagram"></i>
-                  </a>
+              <a href="#" aria-label="Instagram Logo">
+                <i class="fab fa-instagram"></i>
+              </a>
             </div>
             <div class="logo">
-                  <a href="#" aria-label="Google Plus Logo">
-              <i class="fab fa-google-plus-g"></i>
-                  </a>
+              <a href="#" aria-label="Google Plus Logo">
+                <i class="fab fa-google-plus-g"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -133,7 +137,8 @@ footer {
           white-space: nowrap;
           margin-right: 10px;
           position: relative;
-          &:hover,&:focus-within{
+          &:hover,
+          &:focus-within {
             cursor: pointer;
             color: $primary;
           }
@@ -214,7 +219,7 @@ footer {
       }
       &__logo {
         margin-bottom: 0.75em;
-        width:auto;
+        width: auto;
         max-height: 150px;
       }
       &__links {
@@ -235,7 +240,8 @@ footer {
           width: 35px;
           transition: background-color 250ms ease;
           cursor: pointer;
-          &:hover,&:focus-within{
+          &:hover,
+          &:focus-within {
             background-color: $secondary;
           }
         }

@@ -334,26 +334,6 @@ export default {
 
       this.filteredDeliveryTimes = res;
     },
-
-    async applyVoucher() {
-      if (!this.voucher) {
-        console.error("Enter a voucher code");
-      } else {
-        // GIVES NO PROMO CODE, NEED ERROR HANDLELING
-        let url = new URL(`${process.env.VUE_APP_URL}/website/promocode`);
-        url.search = new URLSearchParams({
-          promocode: this.voucher,
-          id: 0,
-        }).toString();
-        try {
-          let res = await fetch(url);
-          let jsn = await res.json();
-          console.log(jsn);
-        } catch (error) {
-          // this.errorMessages.push(error.message);
-        }
-      }
-    },
   },
   computed: {
     ...mapState(["location", "postCodeError", "cart", "details"]),
@@ -364,7 +344,6 @@ export default {
     this.initGoogleAutoComplete(input);
 
     let arr = document.cookie.split(";");
-    console.log(arr);
     let filtered = arr.find((item) => item.includes("TimeZone"));
     let timeZone = filtered.match(/=.*/)[0].substring(1);
 

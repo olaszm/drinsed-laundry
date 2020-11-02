@@ -29,14 +29,24 @@
                 <div class="voucher__container">
                   <BaseInput
                     :placeholder="'Voucher'"
-                    :value="voucher"
-                    v-model="voucher"
+                    :value="voucherInput"
+                    v-model="voucherInput"
                     label="Voucher"
                   />
-                  <BaseButton @click.native="applyVoucher" class="btn-small">
-                    <span slot="text">Apply</span>
+                  <BaseButton
+                    @click.native="applyVoucher"
+                    class="btn-small"
+                    :disabled="isVoucherLoading || voucher.isApplied"
+                  >
+                    <span v-if="!voucher.isApplied" slot="text">Apply</span>
+                    <span v-else slot="text">Applied</span>
                   </BaseButton>
                 </div>
+              </div>
+              <div class="basket__container__row" v-if="voucherError.length">
+                <p class="error">
+                  {{ voucherError }}
+                </p>
               </div>
               <div class="basket__container__row">
                 <h4>Total</h4>
@@ -103,11 +113,13 @@ export default {
   data() {
     return {
       isLoading: false,
+      voucherError: "",
+      isVoucherLoading: false,
       termsError: "",
       stripe: "",
       elements: "",
       card: "",
-      voucher: "",
+      voucherInput: "",
       style: {
         base: {
           color: "grey",
@@ -133,12 +145,13 @@ export default {
       "details",
       "isAgreedToTerms",
       "isSubscribeChecked",
+      "voucher",
     ]),
     ...mapGetters(["calculateTotalPrice"]),
   },
 
   methods: {
-    ...mapActions(["emptyCart", "subscribeToNewsLetter"]),
+    ...mapActions(["emptyCart", "subscribeToNewsLetter", "setVoucher"]),
     stripeTokenHandler(token) {
       var form = this.$refs.form;
       var hiddenInput = document.createElement("input");
@@ -150,6 +163,36 @@ export default {
       console.log("Token Handler executed");
 
       this.payment(token.id);
+    },
+    async applyVoucher() {
+      this.isVoucherLoading = true;
+      this.voucherError = "";
+      this.$Progress.start();
+      if (!this.voucherInput) {
+        this.$Progress.fail();
+        this.voucherError = "Please enter promo code";
+        this.isVoucherLoading = false;
+      } else {
+        let url = new URL(`${process.env.VUE_APP_URL}/website/promocode`);
+        url.search = new URLSearchParams({
+          promocode: this.voucherInput,
+          id: this.$route.params.id,
+        }).toString();
+        let res = await fetch(url);
+        let data = await res.json();
+        if (data.error) {
+          this.isVoucherLoading = false;
+          this.$Progress.fail();
+          this.voucherError = data.error.message;
+        } else {
+          this.setVoucher({
+            isApplied: true,
+            discount: +data.response.discount,
+          });
+        }
+        this.isVoucherLoading = false;
+        this.$Progress.finish();
+      }
     },
     send() {
       console.log("Creating Token");
