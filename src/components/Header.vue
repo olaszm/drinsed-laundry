@@ -72,7 +72,7 @@ header {
   width: 100%;
   background-color: white;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.3);
-  z-index: 15;
+  z-index: 10;
 }
 
 .header__inner {

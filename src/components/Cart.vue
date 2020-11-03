@@ -88,7 +88,7 @@ export default {
   height: 100%;
   width: 30%;
   box-shadow: -8px 0px 10px rgba(0, 0, 0, 0.2);
-  z-index: 10;
+  z-index: 15;
   @media (max-width: $tablet) {
     width: 80%;
   }
