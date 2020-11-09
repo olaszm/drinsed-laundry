@@ -10,16 +10,12 @@
         <button class="close" @click="toggleMenu" aria-label="close menu">
           <i class="fas fa-times"></i>
         </button>
-          <router-link to="/#how">
-        <li>
-          How We Work
-          </li>
-          </router-link>
-          <router-link to="/#services">
-        <li>
-          Services
-          </li>
-          </router-link>
+        <router-link to="/#how">
+          <li>How We Work</li>
+        </router-link>
+        <router-link to="/#services">
+          <li>Services</li>
+        </router-link>
         <!-- <li @click="navigateTo('#how')">How we work</li>
         <li @click="navigateTo('#services')">Services</li> -->
         <router-link to="/pricing">
@@ -32,26 +28,29 @@
       </ul>
 
       <div class="nav__content__social__links">
-         <div class="logo">
-              <a href="#" aria-label="Facebook Logo">
-                <i class="fab fa-facebook-f"></i>
-              </a >
-            </div>
-            <div class="logo">
-                  <a href="#" aria-label="LinkedIn Logo">
-              <i class="fab fa-linkedin"></i>
-                  </a>
-            </div>
-            <div class="logo">
-                  <a href="#" aria-label="Instagram Logo">
-              <i class="fab fa-instagram"></i>
-                  </a>
-            </div>
-            <div class="logo">
-                  <a href="#" aria-label="Google Plus Logo">
-              <i class="fab fa-google-plus-g"></i>
-                  </a>
-            </div>
+        <div class="logo">
+          <a href="https://www.facebook.com/drinsed" aria-label="Facebook Logo">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        </div>
+        <div class="logo">
+          <a href="#" aria-label="LinkedIn Logo">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <div class="logo">
+          <a
+            href="https://www.instagram.com/drinsed/"
+            aria-label="Instagram Logo"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+        <div class="logo">
+          <a href="https://twitter.com/drinsed" aria-label="Twitter Logo">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
       </div>
     </div>
   </transition>
@@ -106,9 +105,10 @@ export default {
   right: 20px;
   top: 20px;
   bottom: 0;
-  transition: color 250ms ;
+  transition: color 250ms;
   cursor: pointer;
-  &:hover,&:focus{
+  &:hover,
+  &:focus {
     color: $secondary;
   }
 }
@@ -130,7 +130,6 @@ export default {
       background-color: rgba(211, 211, 211, 0.3);
     }
   }
-
 }
 
 .nav__header {
@@ -154,16 +153,17 @@ export default {
     border-radius: 50%;
     height: 35px;
     width: 35px;
-              transition: background-color 250ms ease;
-          cursor: pointer;
-           button {
-            border: none;
-            background-color: transparent;
-            color: white;
-          }
-      &:hover,&:focus-within{
-            background-color: $secondary;
-          }
+    transition: background-color 250ms ease;
+    cursor: pointer;
+    button {
+      border: none;
+      background-color: transparent;
+      color: white;
+    }
+    &:hover,
+    &:focus-within {
+      background-color: $secondary;
+    }
   }
 }
 
