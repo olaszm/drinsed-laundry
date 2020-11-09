@@ -250,11 +250,19 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     calculateTotalPrice: (state) => {
-      return state.cart
+      if(state.voucher.isApplied){
+        return state.cart
+          .reduce((acc, curr) => {
+            return (acc += curr.price * curr.quantity);
+          }, 0)
+          .toFixed(2)*state.voucher.discount;
+      } else {
+        return state.cart
         .reduce((acc, curr) => {
           return (acc += curr.price * curr.quantity);
         }, 0)
-        .toFixed(2)*state.voucher.discount;
+        .toFixed(2)
+      }
     },
     getCartLength: (state) => {
       return state.cart.length;
