@@ -119,8 +119,8 @@ export default {
           logo: "services_ironing-.svg",
           details_title: "Ironing Only",
           details_subtitle:
-            "Flexible Pricing for your Laundry Starts from as little as",
-          details_price: "£14.95",
+            " We take the hassle out of your ironing, from as little as ",
+          details_price: "£1.20",
           details_body:
             "Ironing only service requires your items to be pre-washed. We will press, pack and deliver them back to you on hangers.",
 

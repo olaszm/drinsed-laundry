@@ -49,7 +49,10 @@
           <p>On-demand laundry and dry cleaning direct to your door.</p>
           <div class="footer__content__social__links">
             <div class="logo">
-              <a href="#" aria-label="Facebook Logo">
+              <a
+                href="https://www.facebook.com/drinsed"
+                aria-label="Facebook Logo"
+              >
                 <i class="fab fa-facebook-f"></i>
               </a>
             </div>
@@ -59,13 +62,16 @@
               </a>
             </div>
             <div class="logo">
-              <a href="#" aria-label="Instagram Logo">
+              <a
+                href="https://www.instagram.com/drinsed/"
+                aria-label="Instagram Logo"
+              >
                 <i class="fab fa-instagram"></i>
               </a>
             </div>
             <div class="logo">
-              <a href="#" aria-label="Google Plus Logo">
-                <i class="fab fa-google-plus-g"></i>
+              <a href="https://twitter.com/drinsed" aria-label="Twitter Logo">
+                <i class="fab fa-twitter"></i>
               </a>
             </div>
           </div>
@@ -258,6 +264,7 @@ footer {
       }
       img {
         margin-top: 1.25rem;
+        height: 35px;
       }
     }
     @media (max-width: $tablet) {

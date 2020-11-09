@@ -4,8 +4,8 @@
       <div class="how__text">
         <h2>How Drinsed Works</h2>
         <p>
-          Book a collection via our app or website, and we'll bring the bring
-          the bags. In just 48 hours we'll deliver your laundry & dry cleaning
+          Book a collection via our app or website and we’ll bring the bags for
+          you. In just 48 hours we’ll deliver your laundry and dry cleaning
           directly to your door.
         </p>
       </div>
