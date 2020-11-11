@@ -1,7 +1,7 @@
 <template>
   <div class="terms">
     <div class="terms__inner wrapper">
-      <h1>Costumer Terms And Conditions</h1>
+      <h1>Customer Terms and Conditions</h1>
       <div class="section">
         <ol v-for="(item, i) in terms" :key="i">
           <div class="title">{{ i + 1 }}. {{ item.name }}</div>
@@ -30,7 +30,7 @@ export default {
             "These terms will apply to any order we accept from you. You will not be able to place an order unless you accept these Terms.",
             "These terms may change from time to time, and the current version will apply each time you place an order. We will notify you of changes to the Terms by email.",
             "It is important you have read these Terms carefully and understand them before placing an Order. The Terms restrict Our liability to you in certain circumstances, set out in paragraph 12.",
-            "Any Orders without a voucher code and which have a value of less than £20 will be charged at £20 as a minimum. This minimum order value may differ depending on location – if you need help with this, contact Customer Care at support@drinsed.com",
+            "Any Orders without a voucher code and which have a value of less than £20 will be charged at £20 as a minimum. This minimum order value may differ depending on location – if you need help with this, contact Customer Care at support@drinsed.com.",
           ],
         },
         {
@@ -46,21 +46,21 @@ export default {
             "You must check the details of your Order carefully before submitting it, as We will not be liable for any errors you make. If you think you may have made a mistake, please contact Us at support@drinsed.com. We will confirm any changes to your Order by email.",
             "Submission of an Order does not create a contract between us; this only arises when We send you an email confirming acceptance of your Order.",
             "We will assign an order number and inform you of it when We accept the Order. If you need to contact Us, please quote the order number.",
-            "If for any reason We are unable fulfill your Order, we will let you know by email.",
+            "If for any reason We are unable fulfil your Order, we will let you know by email.",
           ],
         },
         {
           name: "Changes to your Order",
           bullets: [
             "You may make a change to an Order up to two hours before the agreed collection time by contacting Us at support@drinsed.com.",
-            "With your consent and at our discretion, we may make a change to your Order as an alternative to canceling it.",
+            "With your consent and at our discretion, we may make a change to your Order as an alternative to cancelling it.",
             "If changes are agreed, We will re-issue the Order confirmation to you via email.",
           ],
         },
         {
           name: "Cancelling or rescheduling your Order",
           bullets: [
-            "You have the following limited rights to cancel an Order",
+            "You have the following limited rights to cancel an Order.",
             "You may cancel or reschedule your Order with no additional charge: at any time up to four hours before the agreed collection time by contacting support@drinsed.com; or if, after we have collected your Item(s), we are affected by an Event Outside Our Control by contacting support@drinsed.com.",
             "You agree that once an Item has been collected from you, we have begun providing the agreed Services and that any rights of cancellation you may have under law will be lost.",
             "If you cancel or reschedule your order less than four hours before collection, or you are not present for collection, you will incur a £10 additional charge.",
@@ -75,7 +75,7 @@ export default {
             "If you are unavailable at the designated time and delivery is not possible, a redelivery charge of £10 will be charged for each attempted delivery. We will endeavour to find a suitable redelivery time, however if you would rather organise a same day courier, this is your responsibility.",
             "If you have failed to accept or arrange redelivery of an Item for more than 90 days after the agreed date, we may dispose of the Item or donate it to a charity of Our choice.",
             "You may arrange to have Items collected from or re-delivered to a third party, but this is at your own risk and an acknowledgement must be signed by them on your behalf.",
-            "You may request Us to leave an Item in an agreed location without providing Us with a signature of acknowledgement, so long as this instruction is in writing. This is at Our discretion and entirely at your own risk, and we shall not be liable to you for any damage or loss of these Items",
+            "You may request Us to leave an Item in an agreed location without providing Us with a signature of acknowledgement, so long as this instruction is in writing. This is at Our discretion and entirely at your own risk, and we shall not be liable to you for any damage or loss of these Items.",
           ],
         },
         {
@@ -83,7 +83,7 @@ export default {
           bullets: [
             "In accordance with good industry standards, we will provide the Services with reasonable care and skill.",
             "We will not be liable for any delay or non-performance of our Services if you have failed to provide accurate information in your Order or if you fail to accept redelivery of Items as agreed.",
-            "We will not be liable for any item provided without a care label, but our experts will clean in a manner they deem most appropriate",
+            "We will not be liable for any item provided without a care label, but our experts will clean in a manner they deem most appropriate.",
             `We may contact you if we consider any Items to be at an increased risk of damage, including, but not limited to, those:`,
           ],
         },
@@ -91,13 +91,10 @@ export default {
           name: "Wash and Fold Orders",
           bullets: [
             "Checking Items Please check all garments for hazardous items as we hold no responsibility for any items lost or damaged as a result of the cleaning process.",
-            `Washing and Drying Process We wash all loads on a 30-degree cycle and tumble-dry on a medium heat. We will not be able to cater to personal requirements (e.g. temperature, washing powders, etc.). Please note that the items are not ironed.            `,
-            `Colour Separation We will separate the clothes into lights and darks for you. Although we will take the utmost care in doing this, we accept no responsibility for any bleeding or colour transfer during the cleaning process.
-            `,
-            `Size of Bag We will measure the laundry by weight. The minimum weight is 8kg and every kg over this will be charged accordingly. You will receive an updated email after we have weighed. Any orders below 8kg will be charged at the Wash, Tumble Dry & Fold price.
-`,
-            `Damaged Items We cannot inspect individual care labels and therefore will not be liable for damage to items washed by the load. For garments that need to be specially treated i.e. leather, silk, cashmere, fur, velvet and other delicate garments, you should ensure that these items can be machine washed and tumble dried.
-            `,
+            `Washing and Drying Process We wash all loads on a 30-degree cycle and tumble-dry on a medium heat. We will not be able to cater to personal requirements (e.g. temperature, washing powders, etc.). Please note that the items are not ironed.`,
+            `Colour Separation We will separate the clothes into lights and darks for you. Although we will take the utmost care in doing this, we accept no responsibility for any bleeding or colour transfer during the cleaning process.`,
+            `Size of Bag We will measure the laundry by weight. The minimum weight is 8kg and every kg over this will be charged accordingly. You will receive an updated email after we have weighed. Any orders below 8kg will be charged at the Wash, Tumble Dry & Fold price.`,
+            `Damaged Items We cannot inspect individual care labels and therefore will not be liable for damage to items washed by the load. For garments that need to be specially treated i.e. leather, silk, cashmere, fur, velvet and other delicate garments, you should ensure that these items can be machine washed and tumble dried.`,
             `Excluded Items: The Wash and Fold will not include any bedding and towelling products. If these are included, then they will be added as an individual product and your bill will be amended accordingly.
 
             `,
@@ -185,7 +182,7 @@ export default {
           ],
         },
         {
-          name: "Vuchers and Promotions",
+          name: "Vouchers and Promotions",
           bullets: [
             "Vouchers are subject to expiry dates and value for promotions",
             `All Our vouchers are subject to Our full terms and conditions.`,
@@ -214,7 +211,7 @@ export default {
         {
           name: "Other important terms",
           bullets: [
-            `We may transfer Our rights and obligations under these Terms to another organisation. If this happens,  We will notify you in writing, but this will not affect your rights or Our obligations.
+            `We may transfer Our rights and obligations under these Terms to another organisation. If this happens, we will notify you in writing, but this will not affect your rights or Our obligations.
 `,
             `This contract is between you and Us. No other person shall have any rights to enforce any of its terms.
 `,

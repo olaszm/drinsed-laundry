@@ -202,10 +202,12 @@ footer {
       }
       &__logos {
         margin-top: 1.25rem;
+        white-space: nowrap;
+        text-align: center;
         cursor: pointer;
         img {
           &:first-child {
-            margin-right: 1rem;
+            margin-right: 0.5rem;
           }
         }
       }
