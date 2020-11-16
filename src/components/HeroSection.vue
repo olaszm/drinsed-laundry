@@ -67,14 +67,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="hero-image">
-        <img src="@/assets/hero-section-1-removebg-preview.png" alt="">
-      </div> -->
     </section>
-
-    <!-- <div class="scroll-indicator">
-      <i class="fas fa-chevron-down"></i>
-    </div> -->
   </div>
 </template>
 
@@ -213,11 +206,6 @@ export default {
   opacity: 1 !important;
 }
 
-// .hero-image {
-//   height: auto;
-//   width: 100%;
-// }
-
 .hero__section {
   position: relative;
   z-index: 2;
@@ -230,8 +218,6 @@ export default {
   display: flex;
   justify-content: center;
   max-width: 60%;
-  // padding: 2.5rem 0;
-
   @media (max-width: $tablet) {
     max-width: 80%;
   }
@@ -249,7 +235,6 @@ export default {
   p {
     font-size: 1.3rem;
     margin: 0.5em 0;
-    color: grey;
   }
   ul {
     li {
