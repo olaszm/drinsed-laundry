@@ -348,12 +348,12 @@ export default {
     let timeZone = filtered.match(/=.*/)[0].substring(1);
 
     let pickUpResponse = await fetch(
-      `${process.env.VUE_APP_URL}/api/v1/pickup_time?time_zone=${timeZone}`
+      `${process.env.VUE_APP_URL}/api/v1/pickup_time?time_zone=${timeZone}&postcode=${this.location.postCode}}`
     );
     let json = await pickUpResponse.json();
     this.pickUpTimes = json.response.data;
     let deliveryResponse = await fetch(
-      `${process.env.VUE_APP_URL}/api/v1/delivery_time?time_zone=${timeZone}`
+      `${process.env.VUE_APP_URL}/api/v1/delivery_time?time_zone=${timeZone}&postcode=${this.location.postCode}}`
     );
     let data = await deliveryResponse.json();
     this.deliveryTimes = data.response.data;

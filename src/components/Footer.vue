@@ -35,7 +35,6 @@
         <div class="footer__content__apps">
           <h3>Download App</h3>
           <div class="footer__content__apps__logos">
-            <img src="@/assets/play_store.svg" alt="Google Play Store Logo" />
             <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
           </div>
         </div>
@@ -202,10 +201,9 @@ footer {
       }
       &__logos {
         margin-top: 1.25rem;
-        white-space: nowrap;
-        text-align: center;
         cursor: pointer;
         img {
+          height: 40px;
           &:first-child {
             margin-right: 0.5rem;
           }

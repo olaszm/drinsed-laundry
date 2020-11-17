@@ -58,11 +58,12 @@
             <span slot="text">Book a Service</span>
           </BaseButton>
         </div>
-        <p :class="postCodeError.type">{{ postCodeError.msg }}</p>
+        <p v-if="postCodeError && !location" :class="postCodeError.type">
+          {{ postCodeError.msg }}
+        </p>
 
         <div class="hero__content__apps">
           <div>
-            <img src="@/assets/play_store.svg" alt />
             <img src="@/assets/app_store.svg" alt />
           </div>
         </div>
@@ -135,10 +136,6 @@ export default {
       } else {
         this.currentIndex--;
       }
-      // clearInterval(this.time);
-      // setTimeout(() => {
-      //   this.startSlider();
-      // }, 5000);
     },
   },
   mounted() {
@@ -157,7 +154,6 @@ export default {
   min-height: 85vh;
   display: flex;
   align-items: center;
-  // overflow: hidden;
 }
 
 .bg__images {
@@ -267,18 +263,14 @@ export default {
     align-items: center;
     margin: 1.25rem 0;
     width: 100%;
-    span {
-      font-size: 16px;
-      font-weight: 500;
-      margin-right: 0.5rem;
-      white-space: nowrap;
-    }
     div {
       margin: 1rem 0;
-      max-height: 30px;
+      max-height: 50px;
+      height: 100%;
       img {
         display: inline-block;
         margin-right: 0.75rem;
+        height: 40px;
         min-width: 100px;
       }
     }

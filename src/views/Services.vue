@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
+
 import ServiceCategory from "@/components/ServiceCategory";
 import Banner from "@/components/Banner";
 import BaseButton from "@/components/BaseButton";
@@ -55,10 +56,11 @@ export default {
     };
   },
   computed: {
+    ...mapState(["location"]),
     ...mapGetters(["getCartLength", "calculateTotalPrice"]),
   },
   methods: {
-    ...mapActions(["addItemToCart"]),
+    ...mapActions(["addItemToCart", "setisPostcodePopUpOpen"]),
     openCategory() {
       this.$emit("open");
     },
@@ -74,12 +76,21 @@ export default {
         quantity: 1,
       };
       this.addItemToCart(orderItem);
-      this.$router.push("/checkout");
+
+      if (!this.location.postCode) {
+        this.setisPostcodePopUpOpen(true);
+      } else {
+        this.$router.push("/checkout");
+      }
     },
     toPayment() {
       this.error = "";
       if (this.calculateTotalPrice >= 20) {
-        this.$router.push("/checkout");
+        if (!this.location.postCode) {
+          this.setisPostcodePopUpOpen(true);
+        } else {
+          this.$router.push("/checkout");
+        }
       } else {
         this.error = "Minimum order is £20";
         window.scrollTo(0, 0);

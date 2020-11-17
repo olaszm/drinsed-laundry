@@ -7,45 +7,41 @@
       <Footer />
     </div>
     <Cart />
+    <PostcodePopUp />
     <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
 <script>
-
 import Cart from "@/components/Cart";
 import MobileMenu from "@/components/MobileMenu";
+import PostcodePopUp from "@/components/PostcodePopUp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { mapState, mapActions } from "vuex";
 export default {
-  components: { Header, Footer, Cart, MobileMenu },
+  components: { Header, Footer, Cart, MobileMenu, PostcodePopUp },
   created() {
-    this.$Progress.start()
+    this.$Progress.start();
     let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     document.cookie = `TimeZone=${timeZone}; secure;`;
-    console.log(process.env.VUE_APP_URL)
+    console.log(process.env.VUE_APP_URL);
 
+    this.$router.beforeEach((to, from, next) => {
+      if (to.name != "pricing") {
+        this.$Progress.start();
+      }
+      next();
+    });
 
-
-     this.$router.beforeEach((to,from,next)=> {
-       if(to.name != 'pricing'){
-         this.$Progress.start()
-       }
-       next()
-     })
-
-     
-
-     this.$router.afterEach((to)=> {
-
-      if(to.name != 'pricing'){
-          this.$Progress.finish()
-     }
-     })
+    this.$router.afterEach((to) => {
+      if (to.name != "pricing") {
+        this.$Progress.finish();
+      }
+    });
   },
   methods: {
-    ...mapActions(["toggleCart", "toggleMenu",'loadFromLocalStorage']),
+    ...mapActions(["toggleCart", "toggleMenu", "loadFromLocalStorage"]),
     closeCart() {
       if (this.isCartOpen) {
         this.toggleCart();
@@ -61,7 +57,7 @@ export default {
     ...mapState(["isCartOpen", "isMenuOpen"]),
   },
   mounted() {
-    this.$Progress.finish()
+    this.$Progress.finish();
     document.addEventListener("click", (e) => {
       // if (!e.target.className.includes("cart") && this.isCartOpen) {
       //   this.toggleCart();
@@ -71,9 +67,8 @@ export default {
         this.toggleMenu();
       }
     });
-   
 
-   this.loadFromLocalStorage()
+    this.loadFromLocalStorage();
   },
 };
 </script>
