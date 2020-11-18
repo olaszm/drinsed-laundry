@@ -59,10 +59,6 @@ export default {
   mounted() {
     this.$Progress.finish();
     document.addEventListener("click", (e) => {
-      // if (!e.target.className.includes("cart") && this.isCartOpen) {
-      //   this.toggleCart();
-      // }
-      // console.log(e.target);
       if (!e.target.className.includes("mobile-menu") && this.isMenuOpen) {
         this.toggleMenu();
       }

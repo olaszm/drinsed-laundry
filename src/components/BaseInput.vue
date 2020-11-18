@@ -7,6 +7,7 @@
         v-if="logo"
       />
       <input
+        :readonly="readonly"
         :pattern="pattern"
         :aria-label="label"
         :type="type"
@@ -39,6 +40,7 @@ export default {
     label: {
       required: true,
     },
+    readonly: {},
     value: {},
     name: {},
     pattern: {},
@@ -85,6 +87,11 @@ div {
     border: 1px solid transparent;
     border-radius: 4px;
     min-height: 40px;
+    &:read-only {
+      border: none;
+      cursor: default;
+      background-color: lightgrey;
+    }
   }
 }
 </style>

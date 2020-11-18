@@ -58,6 +58,7 @@ export default {
         });
       } else {
         this.setisPostcodePopUpOpen(false);
+        this.postCodeInput = "";
         this.$router.push("/checkout");
       }
     },
