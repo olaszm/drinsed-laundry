@@ -84,10 +84,10 @@ export default {
   data() {
     return {
       images: [
-        "hero-section-1.jpg",
-        "hero-section-3.webp",
-        "hero-section-4.webp",
-        "hero-section-5.webp",
+        "hero-section-2.jpg",
+        "hero-section-3.jpg",
+        "hero-section-4.jpg",
+        "hero-section-5.jpg",
       ],
       time: null,
       currentIndex: 0,
