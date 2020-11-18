@@ -4,7 +4,7 @@
       <img
         v-for="i in images"
         :key="i"
-        :src="`./${i}`"
+        :src="require(`@/assets/${i}`)"
         alt="i"
         :class="currentImage == i ? 'show' : ''"
       />
