@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       images: [
-        "hero-section-2.webp",
+        "hero-section-1.jpg",
         "hero-section-3.webp",
         "hero-section-4.webp",
         "hero-section-5.webp",
