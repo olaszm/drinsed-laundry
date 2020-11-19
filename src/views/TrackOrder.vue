@@ -47,7 +47,7 @@
             </div>
             <div class="container__row">
               <h4>Phone Number</h4>
-              <p>{{ user.phone_number ? `0${user.phone_number}` : "" }}</p>
+              <p>{{ user.phone_number }}</p>
             </div>
           </div>
         </div>

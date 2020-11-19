@@ -8,9 +8,10 @@
       <div class="popup__inner wrapper">
         <div class="popup__inner__container">
           <h3>Please enter a postcode to continue</h3>
-          <p :class="postCodeError.type">{{ postCodeError.msg }}</p>
+          <!-- <p :class="postCodeError.type">{{ postCodeError.msg }}</p> -->
           <div class="form-container">
-            <BaseInput
+            <PostCodeInput inputName="#post-code" />
+            <!-- <BaseInput
               :placeholder="'Enter your post code'"
               :logo="'marker.svg'"
               :name="'popUpInput'"
@@ -18,7 +19,7 @@
               :label="'Post Code'"
               v-model="postCodeInput"
               ref="popUp"
-            />
+            /> -->
             <BaseButton @click.native="test">
               <span slot="text">Proceed to payment</span>
             </BaseButton>
@@ -31,12 +32,12 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import PostCodeInput from "@/components/PostCodeInput";
 import BaseButton from "@/components/BaseButton";
-import BaseInput from "@/components/BaseInput";
 export default {
   components: {
     BaseButton,
-    BaseInput,
+    PostCodeInput,
   },
   data() {
     return {
@@ -45,7 +46,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      "initGoogleAutoComplete",
       "checkPostCode",
       "setPostCodeError",
       "setisPostcodePopUpOpen",
@@ -56,7 +56,7 @@ export default {
           type: "error",
           msg: "Please enter a postcode",
         });
-      } else {
+      } else if(!this.postCodeError.msg) {
         this.setisPostcodePopUpOpen(false);
         this.postCodeInput = "";
         this.$router.push("/checkout");
@@ -65,10 +65,6 @@ export default {
   },
   computed: {
     ...mapState(["location", "postCodeError", "isPostCodePopUpOpen"]),
-  },
-  mounted() {
-    let input = document.querySelector("#popUpInput");
-    this.initGoogleAutoComplete(input);
   },
 };
 </script>
@@ -116,12 +112,6 @@ export default {
         align-items: center;
         justify-content: space-between;
         border-radius: 4px;
-        div {
-          box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
-          padding: 0 0.5em;
-          border-radius: 4px;
-          margin-right: 1rem;
-        }
         @media (max-width: $mobile) {
           flex-direction: column;
           div {

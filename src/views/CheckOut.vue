@@ -32,8 +32,8 @@
                       v-model="form.phone"
                       :error="errors.phone"
                       label="Phone number"
-                      pattern="^\d{10}$"
-                      max="10"
+                      pattern="^\d{11}$"
+                      max="11"
                     />
                   </div>
 

@@ -47,13 +47,14 @@
         </ul>
 
         <div class="hero__content__zipform">
-          <BaseInput
+          <PostCodeInput inputName="#postCodeInput" />
+          <!-- <BaseInput
             :placeholder="'Enter your post code'"
             :logo="'marker.svg'"
             :name="'postCodeInput'"
             :value="location.formatedAddress"
             :label="'Post Code'"
-          />
+          /> -->
           <BaseButton class="btn-secondary" @click.native="sendZipCode">
             <span slot="text">Book a Service</span>
           </BaseButton>
@@ -74,12 +75,14 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import PostCodeInput from "@/components/PostCodeInput";
 import BaseButton from "@/components/BaseButton";
-import BaseInput from "@/components/BaseInput";
+// import BaseInput from "@/components/BaseInput";
 export default {
   components: {
     BaseButton,
-    BaseInput,
+    // BaseInput,
+    PostCodeInput,
   },
   data() {
     return {
@@ -94,7 +97,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["location", "postCodeError"]),
+    ...mapState(["location", "postCodeError", "postCodeSuggestions"]),
     imagesLength() {
       return this.images.length;
     },
@@ -104,9 +107,11 @@ export default {
   },
   methods: {
     ...mapActions([
+      "initGetAddress",
       "initGoogleAutoComplete",
       "checkPostCode",
       "setPostCodeError",
+      "pickAddress",
     ]),
     sendZipCode() {
       if (!this.location.formatedAddress) {
@@ -114,8 +119,8 @@ export default {
           type: "error",
           msg: "Please enter a postcode",
         });
-      } else {
-        this.checkPostCode(this.location.postCode);
+      } else if(!this.postCodeError.msg) {
+        this.$router.push('/pricing')
       }
     },
     startSlider() {
@@ -139,8 +144,6 @@ export default {
     },
   },
   mounted() {
-    let input = document.querySelector("#postCodeInput");
-    this.initGoogleAutoComplete(input);
     this.startSlider();
   },
 };
@@ -250,6 +253,14 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
+    // position: relative;
+    // &:focus,
+    // &:focus-within {
+    //   .suggestions {
+    //     visibility: visible;
+    //     opacity: 1;
+    //   }
+    // }
     @media (max-width: $mobile) {
       flex-direction: column;
       button {
@@ -263,6 +274,7 @@ export default {
     align-items: center;
     margin: 1.25rem 0;
     width: 100%;
+
     div {
       margin: 1rem 0;
       max-height: 50px;
