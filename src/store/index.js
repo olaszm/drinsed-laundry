@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     isMenuOpen: false,
     isCartOpen: false,
+    isPostCodePopUpOpen: false,
     voucher: {
       isApplied: false,
       discount: 0,
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    SET_IS_POSTCODE_POPUP_OPEN(state,payload){
+      state.isPostCodePopUpOpen = payload
+    },
     SET_VOUCHER(state, payload){
         state.voucher.isApplied = payload.isApplied
         state.voucher.discount = payload.discount
@@ -87,6 +91,9 @@ export default new Vuex.Store({
     },
     setIsSubscribeChecked({ commit }) {
       commit("SET_SUBSCRIBE_CHECKED");
+    },
+    setisPostcodePopUpOpen({commit},payload){
+      commit("SET_IS_POSTCODE_POPUP_OPEN",payload)
     },
     setDetails({ commit }, payload) {
       commit("SET_DETAILS", payload);

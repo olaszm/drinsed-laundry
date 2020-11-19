@@ -59,6 +59,7 @@
                     label="Address Line 2"
                   />
                   <BaseInput
+                    readonly
                     :placeholder="'Post Code'"
                     :type="'text'"
                     v-model="location.postCode"
@@ -78,7 +79,15 @@
               <div class="time__container">
                 <div class="collection">
                   <h3>Collection Time:</h3>
-                  <div class="collection__times">
+
+                  <div class="loader" v-if="isLoading">
+                    <ClipLoader
+                      :size="65"
+                      :sizeUnit="'px'"
+                      :color="'#13b0a7'"
+                    />
+                  </div>
+                  <div class="collection__times" v-else>
                     <div v-for="(item, index) in pickUpTimes" :key="index">
                       <p>{{ item.subtitle }}</p>
                       <TimeSlotCheckBox
@@ -97,7 +106,14 @@
                 </div>
                 <div class="delivery">
                   <h3>Delivery Time:</h3>
-                  <div class="collection__times" id="delivery-container">
+                  <div class="loader" v-if="isLoading">
+                    <ClipLoader
+                      :size="65"
+                      :sizeUnit="'px'"
+                      :color="'#13b0a7'"
+                    />
+                  </div>
+                  <div class="collection__times" id="delivery-container" v-else>
                     <div
                       v-for="(item, index) in filteredDeliveryTimes"
                       :key="index"
@@ -145,12 +161,14 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import { ClipLoader } from "@saeris/vue-spinners";
 import TimeSlotCheckBox from "@/components/checkout/TimeSlotCheckBox";
 import Banner from "@/components/Banner";
 import BaseInput from "@/components/BaseInput";
 import BaseButton from "@/components/BaseButton";
 export default {
   components: {
+    ClipLoader,
     BaseInput,
     BaseButton,
     TimeSlotCheckBox,
@@ -173,6 +191,7 @@ export default {
         postCode: "",
         address: "",
       },
+      isLoading: false,
       deliveryTimes: [],
       pickUpTimes: [],
       activePickUpTime: {},
@@ -184,7 +203,6 @@ export default {
   methods: {
     ...mapActions([
       "validEmail",
-      "initGoogleAutoComplete",
       "checkPostCode",
       "setDetails",
       "setPostCodeError",
@@ -246,6 +264,7 @@ export default {
     },
 
     backToPricing() {
+      this.$store.commit("SET_LOCATION", {});
       this.isSkipItemInTheCart();
       this.$router.push("/pricing");
     },
@@ -340,20 +359,21 @@ export default {
     ...mapGetters(["calculateTotalPrice"]),
   },
   async mounted() {
-    let input = document.querySelector("#checkoutPostCode");
-    this.initGoogleAutoComplete(input);
+    this.isLoading = true;
+    // let input = document.querySelector("#checkoutPostCode");
+    // this.initGoogleAutoComplete(input);
 
     let arr = document.cookie.split(";");
     let filtered = arr.find((item) => item.includes("TimeZone"));
     let timeZone = filtered.match(/=.*/)[0].substring(1);
 
     let pickUpResponse = await fetch(
-      `${process.env.VUE_APP_URL}/api/v1/pickup_time?time_zone=${timeZone}`
+      `${process.env.VUE_APP_URL}/api/v1/pickup_time?time_zone=${timeZone}&postcode=${this.location.postCode}}`
     );
     let json = await pickUpResponse.json();
     this.pickUpTimes = json.response.data;
     let deliveryResponse = await fetch(
-      `${process.env.VUE_APP_URL}/api/v1/delivery_time?time_zone=${timeZone}`
+      `${process.env.VUE_APP_URL}/api/v1/delivery_time?time_zone=${timeZone}&postcode=${this.location.postCode}}`
     );
     let data = await deliveryResponse.json();
     this.deliveryTimes = data.response.data;
@@ -365,6 +385,7 @@ export default {
       value: `${firstPicKUpTime.value}-${firstPicKUpTime.time[0]?.title}`,
     };
     this.getDeliveryTimes();
+    this.isLoading = false;
   },
 };
 </script>
@@ -551,6 +572,14 @@ form {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.loader {
+  min-height: 200px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
 }
 
 .button__container {

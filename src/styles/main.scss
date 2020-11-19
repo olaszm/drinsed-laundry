@@ -37,6 +37,11 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  &:focus {
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: $primary;
+  }
 }
 
 a {

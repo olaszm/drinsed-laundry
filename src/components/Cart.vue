@@ -60,14 +60,18 @@ export default {
   },
   computed: {
     ...mapGetters(["calculateTotalPrice", "getCartLength"]),
-    ...mapState(["isCartOpen", "cart", "voucher"]),
+    ...mapState(["isCartOpen", "cart", "voucher", "location"]),
   },
   methods: {
-    ...mapActions(["toggleCart"]),
+    ...mapActions(["toggleCart", "setisPostcodePopUpOpen"]),
     toPayment() {
       if (this.calculateTotalPrice >= 20) {
         this.toggleCart();
-        this.$router.push("/checkout");
+        if (!this.location.postCode) {
+          this.setisPostcodePopUpOpen(true);
+        } else {
+          this.$router.push("/checkout");
+        }
       } else {
         this.error = "Minimum order is £20";
       }
