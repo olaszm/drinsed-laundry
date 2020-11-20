@@ -273,7 +273,6 @@ export default {
     align-items: center;
     margin: 1.25rem 0;
     width: 100%;
-
     div {
       margin: 1rem 0;
       max-height: 50px;

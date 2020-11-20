@@ -40,7 +40,6 @@ export default {
     label: {
       required: true,
     },
-
     readonly: {},
     value: {},
     name: {},
