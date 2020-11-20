@@ -253,6 +253,7 @@ export default {
           this.isLoading = false;
           let id = data.response.order.id;
           this.emptyCart();
+          this.$store.commit("SET_LOCATION", {});
           this.$router.push(`/track-order/${id}`);
         }
       } else {

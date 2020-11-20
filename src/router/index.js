@@ -96,6 +96,7 @@ const router = new VueRouter({
     if (to.hash) {
       return {
         selector: to.hash,
+        behavior: 'smooth',
       };
     } else {
       return new Promise((resolve) => {

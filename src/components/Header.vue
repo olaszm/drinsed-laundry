@@ -75,6 +75,10 @@ header {
   z-index: 10;
 }
 
+.exact-active-class {
+  color: $primary;
+}
+
 .header__inner {
   padding: 0.45em 0;
   height: 100%;

@@ -4,7 +4,7 @@
       <img
         v-for="i in images"
         :key="i"
-        :src="`./${i}`"
+        :src="require(`@/assets/${i}`)"
         alt="i"
         :class="currentImage == i ? 'show' : ''"
       />
@@ -47,22 +47,24 @@
         </ul>
 
         <div class="hero__content__zipform">
-          <BaseInput
+          <PostCodeInput inputName="#postCodeInput" />
+          <!-- <BaseInput
             :placeholder="'Enter your post code'"
             :logo="'marker.svg'"
             :name="'postCodeInput'"
             :value="location.formatedAddress"
             :label="'Post Code'"
-          />
+          /> -->
           <BaseButton class="btn-secondary" @click.native="sendZipCode">
             <span slot="text">Book a Service</span>
           </BaseButton>
         </div>
-        <p :class="postCodeError.type">{{ postCodeError.msg }}</p>
+        <p v-if="postCodeError && !location" :class="postCodeError.type">
+          {{ postCodeError.msg }}
+        </p>
 
         <div class="hero__content__apps">
           <div>
-            <img src="@/assets/play_store.svg" alt />
             <img src="@/assets/app_store.svg" alt />
           </div>
         </div>
@@ -73,27 +75,29 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import PostCodeInput from "@/components/PostCodeInput";
 import BaseButton from "@/components/BaseButton";
-import BaseInput from "@/components/BaseInput";
+// import BaseInput from "@/components/BaseInput";
 export default {
   components: {
     BaseButton,
-    BaseInput,
+    // BaseInput,
+    PostCodeInput,
   },
   data() {
     return {
       images: [
-        "hero-section-2.webp",
-        "hero-section-3.webp",
-        "hero-section-4.webp",
-        "hero-section-5.webp",
+        "hero-section-2.jpg",
+        "hero-section-3.jpg",
+        "hero-section-4.jpg",
+        "hero-section-5.jpg",
       ],
       time: null,
       currentIndex: 0,
     };
   },
   computed: {
-    ...mapState(["location", "postCodeError"]),
+    ...mapState(["location", "postCodeError", "postCodeSuggestions"]),
     imagesLength() {
       return this.images.length;
     },
@@ -103,9 +107,10 @@ export default {
   },
   methods: {
     ...mapActions([
-      "initGoogleAutoComplete",
+      "initGetAddress",
       "checkPostCode",
       "setPostCodeError",
+      "pickAddress",
     ]),
     sendZipCode() {
       if (!this.location.formatedAddress) {
@@ -113,8 +118,8 @@ export default {
           type: "error",
           msg: "Please enter a postcode",
         });
-      } else {
-        this.checkPostCode(this.location.postCode);
+      } else if (!this.postCodeError.msg) {
+        this.$router.push("/pricing");
       }
     },
     startSlider() {
@@ -135,15 +140,9 @@ export default {
       } else {
         this.currentIndex--;
       }
-      // clearInterval(this.time);
-      // setTimeout(() => {
-      //   this.startSlider();
-      // }, 5000);
     },
   },
   mounted() {
-    let input = document.querySelector("#postCodeInput");
-    this.initGoogleAutoComplete(input);
     this.startSlider();
   },
 };
@@ -157,7 +156,6 @@ export default {
   min-height: 85vh;
   display: flex;
   align-items: center;
-  // overflow: hidden;
 }
 
 .bg__images {
@@ -254,6 +252,14 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
+    // position: relative;
+    // &:focus,
+    // &:focus-within {
+    //   .suggestions {
+    //     visibility: visible;
+    //     opacity: 1;
+    //   }
+    // }
     @media (max-width: $mobile) {
       flex-direction: column;
       button {
@@ -267,18 +273,15 @@ export default {
     align-items: center;
     margin: 1.25rem 0;
     width: 100%;
-    span {
-      font-size: 16px;
-      font-weight: 500;
-      margin-right: 0.5rem;
-      white-space: nowrap;
-    }
+
     div {
       margin: 1rem 0;
-      max-height: 30px;
+      max-height: 50px;
+      height: 100%;
       img {
         display: inline-block;
         margin-right: 0.75rem;
+        height: 40px;
         min-width: 100px;
       }
     }
