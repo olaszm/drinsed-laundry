@@ -108,7 +108,6 @@ export default {
   methods: {
     ...mapActions([
       "initGetAddress",
-      "initGoogleAutoComplete",
       "checkPostCode",
       "setPostCodeError",
       "pickAddress",
@@ -119,8 +118,8 @@ export default {
           type: "error",
           msg: "Please enter a postcode",
         });
-      } else if(!this.postCodeError.msg) {
-        this.$router.push('/pricing')
+      } else if (!this.postCodeError.msg) {
+        this.$router.push("/pricing");
       }
     },
     startSlider() {

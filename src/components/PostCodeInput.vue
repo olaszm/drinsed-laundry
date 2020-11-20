@@ -18,9 +18,11 @@
         </li>
       </ul>
     </div>
-    <p v-if="postCodeError" :class="postCodeError.type">
-      {{ postCodeError.msg }}
-    </p>
+    <div class="error-container">
+      <p v-if="postCodeError" :class="postCodeError.type">
+        {{ postCodeError.msg }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -59,7 +61,7 @@ div {
 }
 
 .form {
-  padding: 0 0.3em;
+  margin: 0 0.5em;
   width: 100%;
   background-color: white;
   display: flex;
@@ -67,7 +69,11 @@ div {
   justify-content: space-between;
   border-radius: 4px;
   position: relative;
-    // box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
+}
+
+.error-container {
+  margin-left: 0.5em;
 }
 
 .suggestions {

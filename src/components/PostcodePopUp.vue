@@ -8,18 +8,8 @@
       <div class="popup__inner wrapper">
         <div class="popup__inner__container">
           <h3>Please enter a postcode to continue</h3>
-          <!-- <p :class="postCodeError.type">{{ postCodeError.msg }}</p> -->
           <div class="form-container">
             <PostCodeInput inputName="#post-code" />
-            <!-- <BaseInput
-              :placeholder="'Enter your post code'"
-              :logo="'marker.svg'"
-              :name="'popUpInput'"
-              :value="location.formatedAddress"
-              :label="'Post Code'"
-              v-model="postCodeInput"
-              ref="popUp"
-            /> -->
             <BaseButton @click.native="test">
               <span slot="text">Proceed to payment</span>
             </BaseButton>
@@ -56,7 +46,7 @@ export default {
           type: "error",
           msg: "Please enter a postcode",
         });
-      } else if(!this.postCodeError.msg) {
+      } else if (!this.postCodeError.msg) {
         this.setisPostcodePopUpOpen(false);
         this.postCodeInput = "";
         this.$router.push("/checkout");

@@ -205,12 +205,10 @@ export default new Vuex.Store({
       return data;
     },
     initGetAddress({commit},payload){
-    
-      const API_KEY = `SVcgl4zsNkOzBbigsHrABQ29239`
       payload.addEventListener('input', async (e)=> {
         let value = e.target.value
         if(value){
-          const resp = await fetch(`https://api.getAddress.io/autocomplete/${value}?api-key=${API_KEY} `)
+          const resp = await fetch(`https://api.getAddress.io/autocomplete/${value}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `)
           const data = await resp.json()
           commit('SET_POSTCODE_SUGGESTIONS', data.suggestions)
         }
@@ -218,6 +216,7 @@ export default new Vuex.Store({
 
       payload.addEventListener('focus', ()=>{
         let list = document.querySelector('.suggestions')
+        // e.target.value = '';
         list.classList.toggle('open')
       })
 
@@ -230,8 +229,7 @@ export default new Vuex.Store({
     },
 
     async pickAddress({commit,dispatch},{id}) {
-      const API_KEY = `SVcgl4zsNkOzBbigsHrABQ29239`
-      const resp = await fetch(`https://api.getAddress.io/get/${id}?api-key=${API_KEY} `)
+      const resp = await fetch(`https://api.getAddress.io/get/${id}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `)
       const data = await resp.json()
 
 
@@ -254,37 +252,6 @@ export default new Vuex.Store({
 
       dispatch('checkPostCode',postCode)
       commit('SET_LOCATION', location)
-    },
-
-    initGoogleAutoComplete({ commit, state }, HTMLinput) {
-      let autocomplete = new window.google.maps.places.Autocomplete(HTMLinput);
-
-      autocomplete.setComponentRestrictions({
-        country: ["UK"],
-      });
-
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        let ac = place.address_components;
-        let lat = place.geometry.location.lat();
-        let lon = place.geometry.location.lng();
-        let postCode = ac[0]["short_name"];
-        let landmark = ac[1]["long_name"];
-        let country = ac[3]["long_name"];
-        let formatedAddress = place.formatted_address;
-
-        let location = {
-          lat,
-          lon,
-          postCode,
-          landmark,
-          country,
-          formatedAddress,
-        };
-
-        state.details.address = location.landmark;
-        commit("SET_LOCATION", location);
-      });
     },
     navigateTo({ commit }, hash) {
       commit;
