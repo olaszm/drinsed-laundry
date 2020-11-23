@@ -87,10 +87,10 @@ export default {
   data() {
     return {
       images: [
-        "hero-section-2.jpg",
-        "hero-section-3.jpg",
-        "hero-section-4.jpg",
-        "hero-section-5.jpg",
+        "hero-section-2.webp",
+        "hero-section-3.webp",
+        "hero-section-4.webp",
+        "hero-section-5.webp",
       ],
       time: null,
       currentIndex: 0,
@@ -252,14 +252,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
-    // position: relative;
-    // &:focus,
-    // &:focus-within {
-    //   .suggestions {
-    //     visibility: visible;
-    //     opacity: 1;
-    //   }
-    // }
     @media (max-width: $mobile) {
       flex-direction: column;
       button {

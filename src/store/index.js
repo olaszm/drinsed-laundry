@@ -46,21 +46,12 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-<<<<<<< HEAD
     SET_IS_POSTCODE_POPUP_OPEN(state, payload) {
       state.isPostCodePopUpOpen = payload;
     },
     SET_VOUCHER(state, payload) {
       state.voucher.isApplied = payload.isApplied;
       state.voucher.discount = payload.discount;
-=======
-    SET_IS_POSTCODE_POPUP_OPEN(state,payload){
-      state.isPostCodePopUpOpen = payload
-    },
-    SET_VOUCHER(state, payload){
-        state.voucher.isApplied = payload.isApplied
-        state.voucher.discount = payload.discount
->>>>>>> origin/master
     },
     SET_AGREED_TO_TERMS(state) {
       state.isAgreedToTerms = !state.isAgreedToTerms;
@@ -104,13 +95,8 @@ export default new Vuex.Store({
     setIsSubscribeChecked({ commit }) {
       commit("SET_SUBSCRIBE_CHECKED");
     },
-<<<<<<< HEAD
     setisPostcodePopUpOpen({ commit }, payload) {
       commit("SET_IS_POSTCODE_POPUP_OPEN", payload);
-=======
-    setisPostcodePopUpOpen({commit},payload){
-      commit("SET_IS_POSTCODE_POPUP_OPEN",payload)
->>>>>>> origin/master
     },
     setDetails({ commit }, payload) {
       commit("SET_DETAILS", payload);
