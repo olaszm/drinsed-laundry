@@ -208,7 +208,12 @@ export default new Vuex.Store({
       payload.addEventListener('input', async (e)=> {
         let value = e.target.value
         if(value){
-          const resp = await fetch(`https://api.getAddress.io/autocomplete/${value}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `)
+          const resp = await fetch(`https://api.getAddress.io/autocomplete/${value}?api-key=${process.env.VUE_APP_GETADDRESS_KEY}`,
+          {  method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          }, body: JSON.stringify({all: true})})
           const data = await resp.json()
           commit('SET_POSTCODE_SUGGESTIONS', data.suggestions)
         }

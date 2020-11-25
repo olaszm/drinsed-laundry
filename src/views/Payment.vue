@@ -65,6 +65,7 @@
                 name="instructions"
                 placeholder="Write here..."
                 aria-label="Instruction Area"
+                v-model="instruction"
               ></textarea>
               <!-- </div> -->
             </div>
@@ -120,6 +121,7 @@ export default {
       elements: "",
       card: "",
       voucherInput: "",
+      instruction: "",
       style: {
         base: {
           color: "grey",
@@ -226,6 +228,7 @@ export default {
       obj.set("deliver_time", this.details.delivery.slot);
       obj.set("latitude", this.location.lat);
       obj.set("longitude", this.location.lon);
+      obj.set("instruction", this.instruction);
 
       if (this.isAgreedToTerms) {
         if (this.isSubscribeChecked) {
