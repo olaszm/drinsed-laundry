@@ -188,7 +188,7 @@ export default new Vuex.Store({
     async subscribeToNewsLetter({ commit }, email) {
       commit
       let res = await fetch(
-        `${process.env.VUE_APP_URL}/website/homes/subscribe`,
+        `${process.env.VUE_APP_URL}website/homes/subscribe`,
         {
           method: "POST",
           headers: {
