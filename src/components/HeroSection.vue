@@ -65,7 +65,9 @@
 
         <div class="hero__content__apps">
           <div>
-            <img src="@/assets/app_store.svg" alt />
+            <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
+              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+            </a>
           </div>
         </div>
       </div>

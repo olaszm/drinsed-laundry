@@ -35,7 +35,9 @@
         <div class="footer__content__apps">
           <h3>Download App</h3>
           <div class="footer__content__apps__logos">
-            <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+            <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
+              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+            </a>
           </div>
         </div>
 

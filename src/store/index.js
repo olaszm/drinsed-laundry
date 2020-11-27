@@ -191,10 +191,10 @@ export default new Vuex.Store({
         `${process.env.VUE_APP_URL}/website/homes/subscribe`,
         {
           method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
+          // headers: {
+          //   Accept: "application/json",
+          //   "Content-Type": "application/json",
+          // },
           body: JSON.stringify({ email }),
         }
       );
