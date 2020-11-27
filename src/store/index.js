@@ -187,23 +187,23 @@ export default new Vuex.Store({
     },
     async subscribeToNewsLetter({ commit }, email) {
       commit
+
+      let data = new FormData()
+      data.append('email', email)
+
       let res = await fetch(
         `${process.env.VUE_APP_URL}website/homes/subscribe`,
         {
           method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({email}),
+          body: data,
         }
       );
 
      
-      let data = await res.json();
+      let d = await res.json();
 
         
-      return data;
+      return d;
     },
     initGetAddress({commit},payload){
       payload.addEventListener('input', async (e)=> {
