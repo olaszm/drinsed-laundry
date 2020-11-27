@@ -191,17 +191,18 @@ export default new Vuex.Store({
         `${process.env.VUE_APP_URL}website/homes/subscribe`,
         {
           method: "POST",
-          // headers: {
-          //   Accept: "application/json",
-          //   "Content-Type": "application/json",
-          // },
-          body: JSON.stringify({ email }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({email}),
         }
       );
 
+     
       let data = await res.json();
 
-
+        
       return data;
     },
     initGetAddress({commit},payload){
