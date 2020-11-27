@@ -47,8 +47,8 @@
                   <BaseInput
                     :placeholder="'Address Line 1'"
                     :type="'text'"
-                    v-model="location.landmark"
-                    :value="location.landmark"
+                    v-model="location.formatedAddress"
+                    :value="location.formatedAddress"
                     :error="errors.address"
                     label="Address Line 1"
                   />
@@ -180,7 +180,7 @@ export default {
         name: "",
         email: "",
         phone: "",
-        address: this.$store.state.location.landmark || "",
+        address: this.$store.state.location.formatedAddress || "",
         address_two: "",
         post_code: this.$store.state.location.postCode || "",
       },
@@ -272,13 +272,13 @@ export default {
     async createOrder() {
       let data = new FormData();
       data.set("postal_code", this.location.postCode);
-      data.set("pickup_location", this.location.landmark);
+      data.set("pickup_location", this.location.formatedAddress);
       data.set("pickup_latitude", this.location.lat);
       data.set("pickup_longitude", this.location.lon);
       data.set("pickup_postcode", this.location.postCode);
       data.set("pickup_time", this.activePickUpTime.slot);
       data.set("pickup_date", this.activePickUpTime.date);
-      data.set("delivery_location", this.location.landmark);
+      data.set("delivery_location", this.location.formatedAddress);
       data.set("delivery_latitude", this.location.lat);
       data.set("delivery_longitude", this.location.lon);
       data.set("delivery_postcode", this.location.postCode);
@@ -360,9 +360,6 @@ export default {
   },
   async mounted() {
     this.isLoading = true;
-    // let input = document.querySelector("#checkoutPostCode");
-    // this.initGoogleAutoComplete(input);
-
     let arr = document.cookie.split(";");
     let filtered = arr.find((item) => item.includes("TimeZone"));
     let timeZone = filtered.match(/=.*/)[0].substring(1);
