@@ -201,8 +201,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 45px;
+    height: 100%;
+    min-height: 45px;
     position: relative;
+    padding: 0.25em 0;
     p {
       width: 100%;
       text-align: left;
