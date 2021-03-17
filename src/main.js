@@ -4,8 +4,14 @@ import router from "./router";
 import VueMq from "vue-mq";
 import store from "./store";
 import VueProgressBar from "vue-progressbar";
+import VueGTag from 'vue-gtag'
 
 Vue.config.productionTip = false;
+
+
+Vue.use(VueGTag, {
+  config: {id: process.env.VUE_APP_GA_ID}
+},router)
 
 Vue.use(VueProgressBar, {
   color: "#13b0a7",
