@@ -251,7 +251,6 @@ export default {
           this.isLoading = false;
           console.log(data.error);
         } else {
-          this.fbq('track', 'AddToCart');
           this.cart;
           this.$Progress.finish();
           this.isLoading = false;
