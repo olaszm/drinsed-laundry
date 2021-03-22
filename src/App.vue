@@ -57,7 +57,6 @@ export default {
     ...mapState(["isCartOpen", "isMenuOpen"]),
   },
   mounted() {
-    console.log(process.env.VUE_APP_PK_STRIPE_KEY)
     this.$Progress.finish();
     document.addEventListener("click", (e) => {
       if (!e.target.className.includes("mobile-menu") && this.isMenuOpen) {

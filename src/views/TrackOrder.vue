@@ -120,7 +120,8 @@ export default {
     );
 
     let data = await res.json();
-    if (data.error) {
+
+    if (data.code == 400) {
       this.$Progress.fail();
       this.$router.push("/404");
     } else {
