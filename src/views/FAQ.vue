@@ -191,7 +191,7 @@
       <Accordion :title="'Cancellation'">
         <div slot="content">
           <p>
-        Upon placing your order, you can cancel it within 2 hours. If this time has lapsed, please contact us at  , we will see what we can do to help
+        Upon placing your order, you can cancel it within 2 hours. If this time has lapsed, please contact us at <a href="mailto:care@drinsed.com">care@drinsed.com</a>, we will see what we can do to help
           </p>
         </div>
       </Accordion>

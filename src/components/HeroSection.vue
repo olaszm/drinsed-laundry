@@ -48,13 +48,6 @@
 
         <div class="hero__content__zipform">
           <PostCodeInput inputName="#postCodeInput" />
-          <!-- <BaseInput
-            :placeholder="'Enter your post code'"
-            :logo="'marker.svg'"
-            :name="'postCodeInput'"
-            :value="location.formatedAddress"
-            :label="'Post Code'"
-          /> -->
           <BaseButton class="btn-secondary" @click.native="sendZipCode">
             <span slot="text">Book a Service</span>
           </BaseButton>
@@ -64,6 +57,7 @@
         </p>
 
         <div class="hero__content__apps">
+          <SocialButtons />
           <div>
             <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
               <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
@@ -79,11 +73,11 @@
 import { mapActions, mapState } from "vuex";
 import PostCodeInput from "@/components/PostCodeInput";
 import BaseButton from "@/components/BaseButton";
-// import BaseInput from "@/components/BaseInput";
+import SocialButtons from "@/components/SocialButtons"
 export default {
   components: {
+    SocialButtons,
     BaseButton,
-    // BaseInput,
     PostCodeInput,
   },
   data() {
@@ -264,7 +258,8 @@ export default {
   }
   &__apps {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     margin: 1.25rem 0;
     width: 100%;
     div {
