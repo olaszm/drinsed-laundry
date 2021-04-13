@@ -80,9 +80,9 @@ export default new Vuex.Store({
     SET_DETAILS(state, payload) {
       state.details = payload;
     },
-    SET_POSTCODE_SUGGESTIONS(state,payload){
-        state.postCodeSuggestions = payload      
-    }
+    SET_POSTCODE_SUGGESTIONS(state, payload) {
+      state.postCodeSuggestions = payload;
+    },
   },
   actions: {
     setVoucher({ commit }, payload) {
@@ -186,64 +186,75 @@ export default new Vuex.Store({
       return re.test(email);
     },
     async subscribeToNewsLetter({ commit }, email) {
-      commit
+      commit;
+
+      let data = new FormData();
+      data.append("email", email);
+
       let res = await fetch(
         `${process.env.VUE_APP_URL}website/homes/subscribe`,
         {
           method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
+          body: data,
         }
       );
 
-      let data = await res.json();
+      let d = await res.json();
 
 
-      return data;
+      return d;
     },
-    initGetAddress({commit},payload){
-      payload.addEventListener('input', async (e)=> {
-        let value = e.target.value
-        if(value){
-          const resp = await fetch(`https://api.getAddress.io/autocomplete/${value}?api-key=${process.env.VUE_APP_GETADDRESS_KEY}`,
-          {  method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          }, body: JSON.stringify({all: true})})
-          const data = await resp.json()
-          commit('SET_POSTCODE_SUGGESTIONS', data.suggestions)
+    initGetAddress({ commit }, payload) {
+      let id = payload.id.substring(1)
+      payload.addEventListener("input", async (e) => {
+        let value = e.target.value;
+        if (value) {
+          const resp = await fetch(
+            `https://api.getAddress.io/autocomplete/${value}?api-key=${process.env.VUE_APP_GETADDRESS_KEY}`,
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ all: true }),
+            }
+          );
+          const data = await resp.json();
+          commit("SET_POSTCODE_SUGGESTIONS", data.suggestions);
         }
-      })
+      });
 
-      payload.addEventListener('focus', ()=>{
-        let list = document.querySelector('.suggestions')
+      payload.addEventListener("focus", () => {
+        let list = document.querySelector(`.${id}-suggestions`);
         // e.target.value = '';
-        list.classList.toggle('open')
-      })
+        list.classList.toggle("open");
+      });
 
-      payload.addEventListener('blur', ()=>{
+      payload.addEventListener("blur", () => {
         setTimeout(() => {
-          let list = document.querySelector('.suggestions')
-          list.classList.toggle('open')
-        }, 150);
-      })
+          let list = document.querySelector(`.${id}-suggestions`);
+          list.classList.toggle("open");
+        }, 100);
+      });
     },
 
-    async pickAddress({commit,dispatch},{id}) {
-      const resp = await fetch(`https://api.getAddress.io/get/${id}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `)
-      const data = await resp.json()
+    async pickAddress({ commit, dispatch }, { id }) {
+      const resp = await fetch(
+        `https://api.getAddress.io/get/${id}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `
+      );
+      const data = await resp.json();
 
-
-      let country= data.country;
+      let country = data.country;
       let lat = data.latitude;
       let lon = data.longitude;
       let postCode = data.postcode;
-      let landmark = data.town_or_city
-      let formatedAddress = data.formatted_address.join(' ')
+      let landmark = data.town_or_city;
+      let {line_1} = data
+      let {county} = data
+      let formatedAddress = data.formatted_address.filter(
+        (item) => item !== ""
+      );
 
       let location = {
         lat,
@@ -251,12 +262,13 @@ export default new Vuex.Store({
         postCode,
         landmark,
         country,
+        line_1,
+        county,
         formatedAddress,
       };
 
-
-      dispatch('checkPostCode',postCode)
-      commit('SET_LOCATION', location)
+      dispatch("checkPostCode", postCode);
+      commit("SET_LOCATION", location);
     },
     navigateTo({ commit }, hash) {
       commit;

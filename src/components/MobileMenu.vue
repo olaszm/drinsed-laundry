@@ -27,38 +27,21 @@
         <!-- <li><router-link to="/services">Pricing</router-link></li> -->
       </ul>
 
+ 
       <div class="nav__content__social__links">
-        <div class="logo">
-          <a href="https://www.facebook.com/drinsed" aria-label="Facebook Logo">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </div>
-        <div class="logo">
-          <a href="#" aria-label="LinkedIn Logo">
-            <i class="fab fa-linkedin"></i>
-          </a>
-        </div>
-        <div class="logo">
-          <a
-            href="https://www.instagram.com/drinsed/"
-            aria-label="Instagram Logo"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-        </div>
-        <div class="logo">
-          <a href="https://twitter.com/drinsed" aria-label="Twitter Logo">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </div>
+      <SocialButtons />
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+import SocialButtons from '@/components/SocialButtons'
 import { mapState, mapActions } from "vuex";
 export default {
+  components: {
+    SocialButtons
+  },
   data() {
     return {};
   },

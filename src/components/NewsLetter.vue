@@ -9,7 +9,7 @@
           :placeholder="'Enter your email address'"
           :value="email"
           v-model="email"
-          label='Email address'
+          label="Email address"
           @keydown.enter="send"
         />
         <BaseButton @click.native="send" :disabled="isLoading">
@@ -41,21 +41,24 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["validEmail", 'subscribeToNewsLetter']),
+    ...mapActions(["validEmail", "subscribeToNewsLetter"]),
     send() {
       if (this.email) {
         this.validEmail(this.email).then((res) => {
           if (res) {
             this.$Progress.start();
             this.isLoading = true;
-            this.subscribeToNewsLetter(this.email).then((res) => {
-              this.$Progress.finish();
-              this.isLoading = false;
-              this.responseMsg = res;
-              this.email = "";
-            });
+            this.subscribeToNewsLetter(this.email)
+              .then((res) => {
+                this.$Progress.finish();
+                this.isLoading = false;
+                this.responseMsg = res;
+                this.email = "";
+                console.log(res);
+              })
+              .catch((err) => console.error(err));
           } else {
-             this.$Progress.fail();
+            this.$Progress.fail();
             this.responseMsg = {
               code: 400,
               message: "Email address is invalid!",

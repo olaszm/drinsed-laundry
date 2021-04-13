@@ -13,6 +13,7 @@
         :type="type"
         :placeholder="placeholder"
         :value="value"
+        @focus="$emit('my-focus', name)"
         @input="$emit('input', $event.target.value)"
         :id="name"
         :maxlength="max"
@@ -83,6 +84,7 @@ div {
     width: 100%;
     height: 100%;
     font-family: inherit;
+    font-weight: 300;
     padding: 0 0.2rem;
     border: 1px solid transparent;
     border-radius: 4px;

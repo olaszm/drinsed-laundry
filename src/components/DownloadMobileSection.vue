@@ -11,8 +11,9 @@
         <h3>Download The App Now!</h3>
         <p>The Drinsed app is now avaiable on all iOS and android devices.</p>
         <div>
-          <img src="@/assets/play_store.svg" alt="" />
-          <img src="@/assets/app_store.svg" alt="" />
+           <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
+              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+            </a>
         </div>
       </div>
     </div>

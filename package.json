@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "file-loader": "^6.1.0",
     "vue": "^2.6.11",
+    "vue-gtag": "^1.11.0",
     "vue-mq": "^1.0.1",
     "vue-progressbar": "^0.7.5",
     "vue-router": "^3.2.0",

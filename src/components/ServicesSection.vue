@@ -63,7 +63,7 @@ export default {
       services: [
         {
           title: "Laundry Service",
-          body: "Washed, Tubmle Dried and folded. Pricing is based on weight.",
+          body: "Washed, Tumble Dried and folded. Pricing is based on weight.",
           logo: "services_laundry.svg",
           details_title: "Laundry Service",
           details_subtitle:

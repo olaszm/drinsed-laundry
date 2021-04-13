@@ -35,7 +35,9 @@
         <div class="footer__content__apps">
           <h3>Download App</h3>
           <div class="footer__content__apps__logos">
-            <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+            <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
+              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+            </a>
           </div>
         </div>
 
@@ -46,7 +48,7 @@
             alt="Drinsed Logo"
           />
           <p>On-demand laundry and dry cleaning direct to your door.</p>
-          <div class="footer__content__social__links">
+          <!-- <div class="footer__content__social__links">
             <div class="logo">
               <a
                 href="https://www.facebook.com/drinsed"
@@ -73,7 +75,9 @@
                 <i class="fab fa-twitter"></i>
               </a>
             </div>
-          </div>
+          </div> -->
+
+          <SocialButtons />
         </div>
 
         <div class="footer__content__payments">
@@ -93,7 +97,11 @@
 </template>
 
 <script>
+import SocialButtons from '@/components/SocialButtons'
 export default {
+  components: {
+    SocialButtons,
+  },
   methods: {
     goTo(hash) {
       hash;
@@ -227,30 +235,6 @@ footer {
         margin-bottom: 0.75em;
         width: auto;
         max-height: 150px;
-      }
-      &__links {
-        display: flex;
-        margin-top: 1rem;
-        .logo {
-          button {
-            border: none;
-            background-color: transparent;
-            color: white;
-          }
-          display: grid;
-          place-items: center;
-          margin-right: 0.375rem;
-          background-color: $primary;
-          border-radius: 50%;
-          height: 35px;
-          width: 35px;
-          transition: background-color 250ms ease;
-          cursor: pointer;
-          &:hover,
-          &:focus-within {
-            background-color: $secondary;
-          }
-        }
       }
     }
     &__payments {

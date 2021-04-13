@@ -22,14 +22,16 @@
                     <BaseInput
                       :placeholder="'Full name'"
                       :type="'text'"
-                      v-model="form.name"
+                      v-model="details.name"
+                      :value="details.name"
                       :error="errors.name"
                       label="Name"
                     />
                     <BaseInput
                       :placeholder="'Phone'"
                       type="tel"
-                      v-model="form.phone"
+                      v-model="details.phone"
+                      :value="details.phone"
                       :error="errors.phone"
                       label="Phone number"
                       pattern="^\d{11}$"
@@ -40,7 +42,8 @@
                   <BaseInput
                     :placeholder="'Email'"
                     :type="'email'"
-                    v-model="form.email"
+                    v-model="details.email"
+                    :value="details.email"
                     :error="errors.email"
                     label="Email"
                   />
@@ -55,7 +58,8 @@
                   <BaseInput
                     :placeholder="'Address Line 2'"
                     :type="'text'"
-                    v-model="form.address_two"
+                    v-model="location.landmark"
+                    :value="location.landmark"
                     label="Address Line 2"
                   />
                   <BaseInput
@@ -177,11 +181,13 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        email: "",
-        phone: "",
+
+        name: this.$store.state.details.name || "",
+        email: this.$store.state.details.email || "",
+        phone: this.$store.state.details.phone || "",
         address: this.$store.state.location.formatedAddress || "",
-        address_two: "",
+        address_two: this.$store.state.location.landmar || "",
+
         post_code: this.$store.state.location.postCode || "",
       },
       errors: {
@@ -235,15 +241,15 @@ export default {
         this.errors[p] = "";
       }
 
-      if (!this.form.name) {
+      if (!this.details.name) {
         this.errors.name = "Name required!";
       }
-      if (this.form.email.length < 1) {
+      if (this.details.email.length < 1) {
         this.errors.email = "Email required";
-      } else if (!this.validEmail(this.form.email)) {
+      } else if (!this.validEmail(this.details.email)) {
         this.errors.email = "Valid email required!";
       }
-      if (this.form.phone.length < 10) {
+      if (this.details.phone.length < 10) {
         this.errors.phone = "Valid phone number required!";
       }
       if (this.location.postCode.length < 1) {
@@ -297,9 +303,9 @@ export default {
         console.log(response);
       } else {
         let details = {
-          name: this.form.name,
-          email: this.form.email,
-          phone: this.form.phone,
+          name: this.details.name,
+          email: this.details.email,
+          phone: this.details.phone,
           address: this.location.landmark,
           pickup: {
             slot: this.activePickUpTime.slot,
@@ -533,7 +539,7 @@ form {
 }
 
 .collection__times {
-  height: 100%;
+  height: 200px;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -552,7 +558,7 @@ form {
   .delivery {
     width: 100%;
     max-height: 200px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
