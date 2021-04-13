@@ -7,8 +7,9 @@
         :name="inputName"
         :value="location.formatedAddress"
         :label="'Post Code'"
+        @my-focus="handleFocus"
       />
-      <ul class="suggestions">
+      <ul :class="getElementName" class="suggestions">
         <li
           v-for="(item, index) of postCodeSuggestions"
           :key="index"
@@ -40,10 +41,18 @@ export default {
     return {};
   },
   computed: {
+    getElementName(){
+      let inputName = this.$props.inputName.substring(1)
+      return inputName + '-suggestions'
+    },
     ...mapState(["postCodeSuggestions", "location", "postCodeError"]),
   },
   methods: {
     ...mapActions(["initGetAddress", "pickAddress"]),
+    handleFocus() {
+      // let input = document.getElementById(`${this.$props.inputName}`);
+      // this.initGetAddress(input);
+    },
   },
   mounted() {
     let input = document.getElementById(`${this.$props.inputName}`);

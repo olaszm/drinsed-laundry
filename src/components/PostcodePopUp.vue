@@ -9,8 +9,8 @@
         <div class="popup__inner__container">
           <h3>Please enter a postcode to continue</h3>
           <div class="form-container">
-            <PostCodeInput inputName="#post-code" />
-            <BaseButton @click.native="test">
+            <PostCodeInput inputName="#postcode-popup" />
+            <BaseButton @click.native="proceedToPCheckout">
               <span slot="text">Proceed to payment</span>
             </BaseButton>
           </div>
@@ -40,7 +40,7 @@ export default {
       "setPostCodeError",
       "setisPostcodePopUpOpen",
     ]),
-    test() {
+    proceedToPCheckout() {
       if (!this.location.formatedAddress) {
         this.setPostCodeError({
           type: "error",
@@ -56,6 +56,8 @@ export default {
   computed: {
     ...mapState(["location", "postCodeError", "isPostCodePopUpOpen"]),
   },
+  mounted() {
+  }
 };
 </script>
 

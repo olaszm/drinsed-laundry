@@ -1,25 +1,17 @@
 <template>
   <div class="social_links">
-    <div class="logo">
-      <a href="https://www.facebook.com/drinsed" aria-label="Facebook Logo">
+      <a href="https://www.facebook.com/drinsed" class="logo" aria-label="Facebook Logo">
         <i class="fab fa-facebook-f"></i>
       </a>
-    </div>
-    <div class="logo">
-      <a href="#" aria-label="LinkedIn Logo">
+      <a href="#" class="logo" aria-label="LinkedIn Logo">
         <i class="fab fa-linkedin"></i>
       </a>
-    </div>
-    <div class="logo">
-      <a href="https://www.instagram.com/drinsed/" aria-label="Instagram Logo">
+      <a href="https://www.instagram.com/drinsed/" class="logo" aria-label="Instagram Logo">
         <i class="fab fa-instagram"></i>
       </a>
-    </div>
-    <div class="logo">
-      <a href="https://twitter.com/drinsed" aria-label="Twitter Logo">
+      <a href="https://twitter.com/drinsed" class='logo' aria-label="Twitter Logo">
         <i class="fab fa-twitter"></i>
       </a>
-    </div>
   </div>
 </template>
 

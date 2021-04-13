@@ -256,7 +256,23 @@ export default {
           this.isLoading = false;
           let id = data.response.order.id;
           this.emptyCart();
+
+          let details = {
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+            pickup: {
+              slot: "",
+              date: "",
+            },
+            delivery: {
+              slot: "",
+              date: "",
+            },
+          };
           this.$store.commit("SET_LOCATION", {});
+          this.$store.commit("SET_DETAILS", details);
           this.$router.push(`/track-order/${id}`);
         }
       } else {

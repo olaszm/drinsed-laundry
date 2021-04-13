@@ -58,7 +58,8 @@
                   <BaseInput
                     :placeholder="'Address Line 2'"
                     :type="'text'"
-                    v-model="form.address_two"
+                    v-model="location.landmark"
+                    :value="location.landmark"
                     label="Address Line 2"
                   />
                   <BaseInput
@@ -184,7 +185,7 @@ export default {
         email: this.$store.state.details.email || "",
         phone: this.$store.state.details.phone || "",
         address: this.$store.state.location.formatedAddress || "",
-        address_two: "",
+        address_two: this.$store.state.location.landmar || "",
         post_code: this.$store.state.location.postCode || "",
       },
       errors: {
@@ -300,9 +301,9 @@ export default {
         console.log(response);
       } else {
         let details = {
-          name: this.form.name,
-          email: this.form.email,
-          phone: this.form.phone,
+          name: this.details.name,
+          email: this.details.email,
+          phone: this.details.phone,
           address: this.location.landmark,
           pickup: {
             slot: this.activePickUpTime.slot,
@@ -536,7 +537,7 @@ form {
 }
 
 .collection__times {
-  height: 100%;
+  height: 200px;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

@@ -47,7 +47,7 @@
         </ul>
 
         <div class="hero__content__zipform">
-          <PostCodeInput inputName="#postCodeInput" />
+          <PostCodeInput inputName="#postcode-header" />
           <BaseButton class="btn-secondary" @click.native="sendZipCode">
             <span slot="text">Book a Service</span>
           </BaseButton>
