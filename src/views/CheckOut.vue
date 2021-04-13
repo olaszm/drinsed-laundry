@@ -181,11 +181,13 @@ export default {
   data() {
     return {
       form: {
+
         name: this.$store.state.details.name || "",
         email: this.$store.state.details.email || "",
         phone: this.$store.state.details.phone || "",
         address: this.$store.state.location.formatedAddress || "",
         address_two: this.$store.state.location.landmar || "",
+
         post_code: this.$store.state.location.postCode || "",
       },
       errors: {

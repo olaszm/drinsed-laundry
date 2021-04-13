@@ -201,6 +201,7 @@ export default new Vuex.Store({
 
       let d = await res.json();
 
+
       return d;
     },
     initGetAddress({ commit }, payload) {
