@@ -23,7 +23,7 @@
           </li>
         </ul>
 
-        <div class="hero__content__zipform">
+        <div v-if="hasFunctionalityFeatureFlag" class="hero__content__zipform">
           <PostCodeInput inputName="#postcode-header" />
           <BaseButton class="btn-secondary" @click.native="sendZipCode">
             <span slot="text">Book a Service</span>
@@ -77,6 +77,10 @@ export default {
     currentImage() {
       return this.images[Math.abs(this.currentIndex) % this.images.length];
     },
+    hasFunctionalityFeatureFlag() {
+      return process.env.VUE_APP_SERVICES_ON === 'True' ?? false
+
+    }
   },
   methods: {
     ...mapActions([
