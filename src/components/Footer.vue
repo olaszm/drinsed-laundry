@@ -36,7 +36,7 @@
           <h3>Download App</h3>
           <div class="footer__content__apps__logos">
             <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
-              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+              <img src="@/images/app_store.svg" alt="App Play Store Logo" />
             </a>
           </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="footer__content__social">
           <img
             class="footer__content__social__logo"
-            src="@/assets/logo-white-small.png"
+            src="@/images/logo-white-small.png"
             alt="Drinsed Logo"
           />
           <p>On-demand laundry and dry cleaning direct to your door.</p>
@@ -82,7 +82,7 @@
 
         <div class="footer__content__payments">
           <h3>Payment Methods</h3>
-          <img src="@/assets/payment_methods.svg" alt="Cards" />
+          <img src="@/images/payment_methods.svg" alt="Cards" />
         </div>
       </div>
 

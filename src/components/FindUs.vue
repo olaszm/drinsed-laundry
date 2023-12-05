@@ -63,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/_variables.scss";
 section {
-  background: url("../assets/map_bg.png") no-repeat center;
+  background: url("../images/map_bg.png") no-repeat center;
   background-size: cover;
   height: 100%;
   min-height:450px;

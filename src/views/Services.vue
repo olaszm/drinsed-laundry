@@ -98,8 +98,8 @@ export default {
     },
   },
   async created() {
+    this.$Progress.start();
     try {
-      this.$Progress.start();
       let res = await fetch(`${process.env.VUE_APP_URL}api/v1/service_list`);
       let data = await res.json();
       let images = [
@@ -116,11 +116,11 @@ export default {
       });
 
       this.services = newData;
-      this.$Progress.finish();
     } catch (error) {
-      console.error(error);
       this.error = "Something went wrong, please try again later!";
       this.$Progress.fail();
+    } finally {
+      this.$Progress.finish()
     }
   },
 };

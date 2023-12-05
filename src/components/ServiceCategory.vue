@@ -2,7 +2,7 @@
   <div class="card" :class="isOpen ? 'open' : ''" @click.self="openModal" @keydown.enter="openModal">
     <div class="card__inner" @click="openModal">
       <div class="img-container">
-        <img :src="require(`../assets${service.image}`)" alt />
+        <img :src="require(`../images${service.image}`)" alt />
       </div>
       <div class="content-container">
         <div class="content">

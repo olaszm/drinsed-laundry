@@ -1,9 +1,9 @@
 <template>
   <div class="notfound wrapper">
-    <img src="../assets/404.svg" alt="Page Not Found" />
+    <img src="../images/404.svg" alt="Page Not Found" />
     <h2>Page not found!</h2>
     <router-link to="/">
-      <BaseButton class="btn-secondary" @click.native="send">
+      <BaseButton class="btn-secondary">
         <span slot="text">Take me Home</span>
       </BaseButton>
     </router-link>

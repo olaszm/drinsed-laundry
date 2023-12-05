@@ -12,7 +12,7 @@
       <!-- <div class="how__progress-bar">
         <img
           class="progress-bar"
-          src="@/assets/progress-bar.png"
+          src="@/images/progress-bar.png"
           alt="How We Work Steps"
         />
       </div> -->
@@ -70,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/_variables.scss";
 section {
-  background: url("../assets/how-we-work-bg.svg") no-repeat 100%;
+  background: url("../images/how-we-work-bg.svg") no-repeat 100%;
   background-size: 100% 100%;
   background-color: #f7f9fc;
   min-height: 80vh;

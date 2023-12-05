@@ -1,22 +1,11 @@
 <template>
   <div class="bg__wrapper">
     <div class="bg__images">
-      <img
-        v-for="i in images"
-        :key="i"
-        :src="require(`@/assets/${i}`)"
-        alt="i"
-        :class="currentImage == i ? 'show' : ''"
-      />
+      <img v-for="i in images" :key="i" :src="i" alt="i" :class="currentImage == i ? 'show' : ''" />
     </div>
     <div class="slider-dots">
-      <span
-        v-for="(item, index) of imagesLength"
-        :key="index"
-        class="dots"
-        @click="currentIndex = index"
-        :class="index == currentIndex ? 'active-dot' : ''"
-      ></span>
+      <span v-for="(item, index) of imagesLength" :key="index" class="dots" @click="currentIndex = index"
+        :class="index == currentIndex ? 'active-dot' : ''"></span>
     </div>
     <section class="wrapper hero__section">
       <div class="hero__content">
@@ -29,20 +18,8 @@
           <br />directly to your door.
         </p>
         <ul>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>Free Collection & Delivery
-          </li>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>Expert Service Any day of
-            the week
-          </li>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>Late evening Collection &
-            Delivery
-          </li>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>From as little as £2.00 per
-            item
+          <li v-for="(service, index) in services" :key="index">
+            <i class="fas fa-arrow-circle-right"></i> <span> {{ service }}</span>
           </li>
         </ul>
 
@@ -60,7 +37,7 @@
           <SocialButtons />
           <div>
             <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
-              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+              <img src="@/images/app_store.svg" alt="App Play Store Logo" />
             </a>
           </div>
         </div>
@@ -74,6 +51,8 @@ import { mapActions, mapState } from "vuex";
 import PostCodeInput from "@/components/PostCodeInput";
 import BaseButton from "@/components/BaseButton";
 import SocialButtons from "@/components/SocialButtons"
+import heroSectionOne from "../images/hero-section-2.webp";
+
 export default {
   components: {
     SocialButtons,
@@ -82,11 +61,9 @@ export default {
   },
   data() {
     return {
+      services: ["Free Collection & Delivery", "Expert Service Any day of the week", "Late evening Collection & Delivery", "From as little as £2.00 per item"],
       images: [
-        "hero-section-2.webp",
-        "hero-section-3.webp",
-        "hero-section-4.webp",
-        "hero-section-5.webp",
+        heroSectionOne,
       ],
       time: null,
       currentIndex: 0,
@@ -192,6 +169,7 @@ export default {
   margin: 0.5em 0em;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
 }
+
 .active-dot {
   opacity: 1;
 }
@@ -212,35 +190,43 @@ export default {
   display: flex;
   justify-content: center;
   max-width: 60%;
+
   @media (max-width: $tablet) {
     max-width: 80%;
   }
+
   @media (max-width: $mobile) {
     max-width: 100%;
   }
+
   h1 {
     margin: 0.25em 0;
     font-size: 3.5rem;
     font-weight: 300;
+
     @media (max-width: $mobile) {
       font-size: 2.25rem;
     }
   }
+
   p {
     font-size: 1.3rem;
     margin: 0.5em 0;
   }
+
   ul {
     li {
       font-size: 1rem;
       font-weight: 500;
       margin: 1.5rem 0;
+
       i {
         color: $primary;
         margin-right: 0.5rem;
       }
     }
   }
+
   &__zipform {
     padding: 0.3em;
     background-color: white;
@@ -248,24 +234,29 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
+
     @media (max-width: $mobile) {
       flex-direction: column;
+
       button {
         margin: 1rem 0 0 0;
         width: 100%;
       }
     }
   }
+
   &__apps {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 1.25rem 0;
     width: 100%;
+
     div {
       margin: 1rem 0;
       max-height: 50px;
       height: 100%;
+
       img {
         display: inline-block;
         margin-right: 0.75rem;
@@ -277,6 +268,7 @@ export default {
     @media (max-width: $mobile) {
       flex-direction: column;
       align-items: flex-start;
+
       div {
         margin: 1rem 0;
       }
@@ -296,9 +288,11 @@ export default {
   width: 50px;
   transform: translateY(-45px);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+
   i {
     color: $primary;
   }
+
   @media (max-width: $mobile) {
     display: none;
   }
