@@ -4,14 +4,8 @@
       <h2>Get Updates In Your Inbox!</h2>
       <p>Get the latest social media news, trends and tips in your inbox.</p>
       <div class="form">
-        <BaseInput
-          class="rounded"
-          :placeholder="'Enter your email address'"
-          :value="email"
-          v-model="email"
-          label="Email address"
-          @keydown.enter="send"
-        />
+        <BaseInput class="rounded" :placeholder="'Enter your email address'" :modelValue="email"
+          @update:modelValue="willHandleEmailUpdate" label="Email address" @keydown.enter="send" />
         <BaseButton @click.native="send" :disabled="isLoading">
           <span slot="text" v-if="!isLoading">Subscribe</span>
           <span slot="text" v-else>...</span>
@@ -42,37 +36,55 @@ export default {
   },
   methods: {
     ...mapActions(["validEmail", "subscribeToNewsLetter"]),
-    send() {
+    async send() {
       if (this.email) {
-        this.validEmail(this.email).then((res) => {
-          if (res) {
-            this.$Progress.start();
-            this.isLoading = true;
-            this.subscribeToNewsLetter(this.email)
-              .then((res) => {
-                this.$Progress.finish();
-                this.isLoading = false;
-                this.responseMsg = res;
-                this.email = "";
-                console.log(res);
-              })
-              .catch((err) => console.error(err));
-          } else {
+        this.$Progress.start();
+        const isValidEmail = await this.validEmail(this.email)
+
+        console.log(`isValidEmail`, isValidEmail, this.email)
+
+        if (isValidEmail) {
+          this.isLoading = true;
+
+          const [data, error] = await this.subscribeToNewsLetter(this.email)
+
+          if (data) {
+            this.isLoading = false;
+            this.responseMsg = data;
+            this.email = "";
+
+          }
+
+          if (error) {
             this.$Progress.fail();
             this.responseMsg = {
               code: 400,
-              message: "Email address is invalid!",
+              message: "Something went wrong!",
             };
           }
-        });
-      } else {
-        this.$Progress.fail();
-        this.responseMsg = {
-          code: 400,
-          message: "Email address is empty!",
-        };
+          return
+        } else {
+          this.$Progress.fail();
+          this.responseMsg = {
+            code: 400,
+            message: "Invalid email address!",
+          };
+          return
+
+        }
       }
+
+      this.$Progress.finish();
+
+      this.responseMsg = {
+        code: 400,
+        message: "Email address is missing!",
+      };
+      return
     },
+    willHandleEmailUpdate(v) {
+      this.email = v
+    }
   },
 };
 </script>
@@ -92,10 +104,12 @@ section {
 .newsletter__inner {
   max-width: 600px;
   color: white;
+
   h2 {
     font-weight: 300;
     font-size: 2.5rem;
   }
+
   p {
     margin: 1rem 0;
   }
@@ -107,17 +121,21 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   button {
     height: 100%;
     width: 195px;
     margin-left: 1rem;
   }
+
   @media (max-width: $mobile) {
     height: 90px;
     flex-direction: column;
+
     input {
       height: 45px;
     }
+
     button {
       margin-left: 0;
       margin-top: 0.5rem;

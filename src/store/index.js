@@ -188,28 +188,29 @@ export default new Vuex.Store({
     setPostCodeError({ commit }, msg) {
       commit("SET_POSTCODE_ERROR", msg);
     },
-    validEmail({ commit }, email) {
-      commit;
+    validEmail(_, email) {
       let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-    async subscribeToNewsLetter({ commit }, email) {
-      commit;
+    async subscribeToNewsLetter(_, email) {
+      try {
+        let data = new FormData();
+        data.append("email", email);
 
-      let data = new FormData();
-      data.append("email", email);
+        let res = await fetch(
+          `${process.env.VUE_APP_URL}website/homes/subscribe`,
+          {
+            method: "POST",
+            body: data,
+          }
+        );
 
-      let res = await fetch(
-        `${process.env.VUE_APP_URL}website/homes/subscribe`,
-        {
-          method: "POST",
-          body: data,
-        }
-      );
+        let d = await res.json();
 
-      let d = await res.json();
-
-      return d;
+        return [d, undefined];
+      } catch (error) {
+        return [undefined, error];
+      }
     },
     async initGetAddress({ commit }, payload) {
       try {

@@ -23,7 +23,7 @@
             <li><router-link to="/#how">How We Work</router-link></li>
             <li><router-link to="/#services">Services</router-link></li>
 
-            <li>
+            <li v-if="hasFunctionalityFeatureFlag">
               <router-link to="/pricing">Pricing</router-link>
             </li>
             <li>
@@ -58,6 +58,9 @@ export default {
       );
       return w <= 768 ? true : false;
     },
+    hasFunctionalityFeatureFlag() {
+      return process.env.VUE_APP_SERVICES_ON === 'True' ?? false
+    }
   },
 };
 </script>
