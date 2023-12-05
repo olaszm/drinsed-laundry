@@ -1,23 +1,10 @@
 <template>
   <div>
     <div class="container">
-      <img
-        :src="require(`@/images/${logo}`)"
-        alt="place-holder-logo"
-        v-if="logo"
-      />
-      <input
-        :readonly="readonly"
-        :pattern="pattern"
-        :aria-label="label"
-        :type="type"
-        :placeholder="placeholder"
-        :value="value"
-        @focus="$emit('my-focus', name)"
-        @input="$emit('input', $event.target.value)"
-        :id="name"
-        :maxlength="max"
-      />
+      <img :src="require(`@/images/${logo}`)" alt="place-holder-logo" v-if="logo" />
+      <input @blur="$emit('blur')" :readonly="readonly" :pattern="pattern" :aria-label="label" :type="type" :placeholder="placeholder"
+        :value="modelValue"  @focus="$emit('my-focus', name)" @input="$emit('update:modelValue', $event.target.value)"
+        :id="name" :maxlength="max" />
     </div>
     <p class="error" v-if="error">{{ error }}</p>
   </div>
@@ -26,6 +13,9 @@
 <script>
 export default {
   props: {
+    modelValue: {
+      type: [String, Number]
+    },
     type: {
       default: "text",
       type: String,
@@ -53,12 +43,6 @@ export default {
       isActive: false,
     };
   },
-  methods: {
-    handleInput(event) {
-      // console.log(event);
-      this.$emit("test", event.target.value);
-    },
-  },
 };
 </script>
 
@@ -66,19 +50,23 @@ export default {
 div {
   height: 100%;
   width: 100%;
+
   p {
     margin: 0.5rem 0;
   }
 }
+
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+
   img {
     margin-right: 0.5rem;
   }
+
   input {
     border: none;
     width: 100%;
@@ -89,6 +77,7 @@ div {
     border: 1px solid transparent;
     border-radius: 4px;
     min-height: 40px;
+
     &:read-only {
       border: none;
       cursor: default;

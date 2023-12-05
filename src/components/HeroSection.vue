@@ -1,8 +1,7 @@
 <template>
   <div class="bg__wrapper">
     <div class="bg__images">
-      <img v-for="i in images" :key="i" :src="i" alt="i"
-        :class="currentImage == i ? 'show' : ''" />
+      <img v-for="i in images" :key="i" :src="i" alt="i" :class="currentImage == i ? 'show' : ''" />
     </div>
     <div class="slider-dots">
       <span v-for="(item, index) of imagesLength" :key="index" class="dots" @click="currentIndex = index"
@@ -19,20 +18,8 @@
           <br />directly to your door.
         </p>
         <ul>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>Free Collection & Delivery
-          </li>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>Expert Service Any day of
-            the week
-          </li>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>Late evening Collection &
-            Delivery
-          </li>
-          <li>
-            <i class="fas fa-arrow-circle-right"></i>From as little as £2.00 per
-            item
+          <li v-for="(service, index) in services" :key="index">
+            <i class="fas fa-arrow-circle-right"></i> <span> {{ service }}</span>
           </li>
         </ul>
 
@@ -74,6 +61,7 @@ export default {
   },
   data() {
     return {
+      services: ["Free Collection & Delivery", "Expert Service Any day of the week", "Late evening Collection & Delivery", "From as little as £2.00 per item"],
       images: [
         heroSectionOne,
       ],
@@ -310,4 +298,5 @@ export default {
   }
 
   display: none;
-}</style>
+}
+</style>

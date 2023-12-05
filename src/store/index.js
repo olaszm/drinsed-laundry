@@ -163,17 +163,25 @@ export default new Vuex.Store({
       commit("SET_POSTCODE_ERROR", {});
       try {
         let res = await fetch(
-          `${process.env.VUE_APP_URL}/api/v1/availability/postcode`,
+          `${process.env.VUE_APP_URL}api/v1/availability/postcode`,
           {
             method: "POST",
             body: data,
           }
         );
-        let jsn = await res.json();
-        if (jsn.error) {
-          throw new Error(jsn.error.message);
-        }
+        // TODO: Check response here
+        await res.json();
       } catch (error) {
+        const { name } = error;
+
+        if (name === "SyntaxError") {
+          commit("SET_POSTCODE_ERROR", {
+            type: "error",
+            msg: "Something went wrong, try again later!",
+          });
+          return;
+        }
+
         commit("SET_POSTCODE_ERROR", { type: "error", msg: error.message });
       }
     },
@@ -201,74 +209,69 @@ export default new Vuex.Store({
 
       let d = await res.json();
 
-
       return d;
     },
-    initGetAddress({ commit }, payload) {
-      let id = payload.id.substring(1)
-      payload.addEventListener("input", async (e) => {
-        let value = e.target.value;
-        if (value) {
-          const resp = await fetch(
-            `https://api.getAddress.io/autocomplete/${value}?api-key=${process.env.VUE_APP_GETADDRESS_KEY}`,
-            {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ all: true }),
-            }
-          );
-          const data = await resp.json();
-          commit("SET_POSTCODE_SUGGESTIONS", data.suggestions);
-        }
-      });
+    async initGetAddress({ commit }, payload) {
+      try {
+        const resp = await fetch(
+          `https://api.getAddress.io/autocomplete/${payload}?api-key=${process.env.VUE_APP_GETADDRESS_KEY}`,
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ all: true }),
+          }
+        );
+        const data = await resp.json();
+        const { suggestions } = data;
 
-      payload.addEventListener("focus", () => {
-        let list = document.querySelector(`.${id}-suggestions`);
-        // e.target.value = '';
-        list.classList.toggle("open");
-      });
-
-      payload.addEventListener("blur", () => {
-        setTimeout(() => {
-          let list = document.querySelector(`.${id}-suggestions`);
-          list.classList.toggle("open");
-        }, 100);
-      });
+        if (suggestions) commit("SET_POSTCODE_SUGGESTIONS", suggestions);
+      } catch (error) {
+        console.log("Something went wrong", error);
+      }
     },
 
     async pickAddress({ commit, dispatch }, { id }) {
-      const resp = await fetch(
-        `https://api.getAddress.io/get/${id}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `
-      );
-      const data = await resp.json();
+      if (!id) return;
 
-      let country = data.country;
-      let lat = data.latitude;
-      let lon = data.longitude;
-      let postCode = data.postcode;
-      let landmark = data.town_or_city;
-      let {line_1} = data
-      let {county} = data
-      let formatedAddress = data.formatted_address.filter(
-        (item) => item !== ""
-      );
+      try {
+        const resp = await fetch(
+          `https://api.getAddress.io/get/${id}?api-key=${process.env.VUE_APP_GETADDRESS_KEY} `
+        );
+        const data = await resp.json();
 
-      let location = {
-        lat,
-        lon,
-        postCode,
-        landmark,
-        country,
-        line_1,
-        county,
-        formatedAddress,
-      };
+        if (data) {
+          const {
+            country,
+            latitude,
+            longitude,
+            postcode,
+            town_or_city,
+            line_1,
+            county,
+            formatedAddress,
+          } = data;
 
-      dispatch("checkPostCode", postCode);
-      commit("SET_LOCATION", location);
+          let location = {
+            latitude,
+            longitude,
+            postcode,
+            town_or_city,
+            country,
+            line_1,
+            county,
+            formatedAddress,
+          };
+
+          console.log(formatedAddress);
+          commit("SET_LOCATION", location);
+          dispatch("checkPostCode", postcode);
+        }
+      } catch (error) {
+        console.log("Something went wrong", error);
+      }
     },
     navigateTo({ commit }, hash) {
       commit;

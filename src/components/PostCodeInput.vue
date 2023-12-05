@@ -1,20 +1,11 @@
 <template>
   <div>
     <div class="form">
-      <BaseInput
-        :placeholder="'Enter your post code'"
-        :logo="'marker.svg'"
-        :name="inputName"
-        :value="location.formatedAddress"
-        :label="'Post Code'"
-        @my-focus="handleFocus"
-      />
-      <ul :class="getElementName" class="suggestions">
-        <li
-          v-for="(item, index) of postCodeSuggestions"
-          :key="index"
-          @click="pickAddress(item)"
-        >
+      <BaseInput :placeholder="'Enter your post code'" :logo="'marker.svg'" :name="inputName"
+        :modelValue="location.formatedAddress" @update:modelValue="willHandlePostcodeInput" :label="'Post Code'"
+        @my-focus="handleFocus" />
+      <ul :class="getElementName" v-if="isSuggestionsOpen && postCodeSuggestions.length" class="suggestions">
+        <li v-for="(item, index) of postCodeSuggestions" :key="index" @click.self="willPickAddress(item)">
           {{ item.address }}
         </li>
       </ul>
@@ -38,10 +29,12 @@ export default {
   },
   components: { BaseInput },
   data() {
-    return {};
+    return {
+      isSuggestionsOpen: false
+    };
   },
   computed: {
-    getElementName(){
+    getElementName() {
       let inputName = this.$props.inputName.substring(1)
       return inputName + '-suggestions'
     },
@@ -50,13 +43,22 @@ export default {
   methods: {
     ...mapActions(["initGetAddress", "pickAddress"]),
     handleFocus() {
-      // let input = document.getElementById(`${this.$props.inputName}`);
-      // this.initGetAddress(input);
+      this.isSuggestionsOpen = true
     },
-  },
-  mounted() {
-    let input = document.getElementById(`${this.$props.inputName}`);
-    this.initGetAddress(input);
+    handleBlur() {
+      this.isSuggestionsOpen = false
+    },
+    willHandlePostcodeInput(value) {
+      // TODO: Add debounce here
+      if (value.length >= 3) {
+        this.initGetAddress(value)
+      }
+
+    },
+    willPickAddress(address) {
+      this.pickAddress(address)
+      this.handleBlur()
+    }
   },
 };
 </script>
@@ -86,7 +88,6 @@ div {
 }
 
 .suggestions {
-  visibility: hidden;
   position: absolute;
   z-index: 10;
   width: 100%;
@@ -97,6 +98,7 @@ div {
   overflow-y: scroll;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+
   li {
     padding: 0.4em 0.2em;
     margin: 0;
@@ -104,14 +106,11 @@ div {
     min-height: 15px;
     width: 100%;
     cursor: pointer;
+
     // padding: 0 0.25em;
     &:hover {
       background-color: $primary;
     }
   }
-}
-
-.open {
-  visibility: visible;
 }
 </style>
