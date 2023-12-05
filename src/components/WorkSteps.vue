@@ -1,6 +1,6 @@
 <template>
   <div class="step">
-    <img :src="require(`@/assets/${url}`)" alt="Collect" />
+    <img :src="require(`@/images/${url}`)" alt="Collect" />
     <h3>{{ title }}</h3>
     <p>{{ text }}</p>
   </div>

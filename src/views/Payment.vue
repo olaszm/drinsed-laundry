@@ -324,7 +324,7 @@ export default {
 @import "@/styles/_variables.scss";
 
 .checkout {
-  background: url("../assets/checkout-bg.svg") no-repeat;
+  background: url("../images/checkout-bg.svg") no-repeat;
   background-position: bottom;
   background-size: 100%;
   position: relative;

@@ -121,7 +121,7 @@ export default {
 }
 
 .review {
-  background: url("../assets/reviews_bg.svg") no-repeat;
+  background: url("../images/reviews_bg.svg") no-repeat;
   background-size: cover;
   min-height: 250px;
   height: 100%;

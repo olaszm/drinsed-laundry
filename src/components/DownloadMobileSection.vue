@@ -1,10 +1,10 @@
 <template>
   <section class="download">
-    <img class="stamp" src="@/assets/stamp.svg" alt="" />
+    <img class="stamp" src="@/images/stamp.svg" alt="" />
     <div class="download__inner wrapper">
       <img
         class="mobile-mockup"
-        src="@/assets/mobile-mockup.png"
+        src="@/images/mobile-mockup.png"
         alt="Mobile Mockup"
       />
       <div class="download__inner__content">
@@ -12,7 +12,7 @@
         <p>The Drinsed app is now avaiable on all iOS and android devices.</p>
         <div>
            <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
-              <img src="@/assets/app_store.svg" alt="App Play Store Logo" />
+              <img src="@/images/app_store.svg" alt="App Play Store Logo" />
             </a>
         </div>
       </div>
@@ -27,7 +27,7 @@ export default {};
 <style lang="scss" scoped>
 @import "@/styles/_variables.scss";
 section {
-  background: url("../assets/download_section_bg.svg") no-repeat;
+  background: url("../images/download_section_bg.svg") no-repeat;
   background-size: cover;
   height: 100%;
   position: relative;

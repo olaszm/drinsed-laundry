@@ -3,7 +3,7 @@
     <div class="header__inner wrapper">
       <div class="logo">
         <router-link to="/">
-          <img src="@/assets/drinsed-v1b-large.png" alt="Logo" />
+          <img src="@/images/drinsed-v1b-large.png" alt="Logo" />
         </router-link>
       </div>
       <nav class="nav">
@@ -68,6 +68,7 @@ export default {
 header {
   position: -webkit-sticky;
   position: sticky;
+  height: 75px;
   top: 0;
   width: 100%;
   background-color: white;

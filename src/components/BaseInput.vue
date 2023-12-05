@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <img
-        :src="require(`@/assets/${logo}`)"
+        :src="require(`@/images/${logo}`)"
         alt="place-holder-logo"
         v-if="logo"
       />

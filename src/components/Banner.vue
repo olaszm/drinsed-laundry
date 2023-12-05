@@ -15,7 +15,7 @@ export default {};
 @import "@/styles/_variables.scss";
 
 .header {
-  background: url("../assets/services-header.svg") no-repeat;
+  background: url("../images/services-header.svg") no-repeat;
   background-size: cover;
   height: 100%;
   // min-height: 250px;

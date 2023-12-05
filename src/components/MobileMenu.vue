@@ -3,7 +3,7 @@
     <div class="nav__container mobile-menu" v-if="isMenuOpen">
       <div class="nav__header mobile-menu">
         <router-link to="/">
-          <img src="@/assets/logo_big.svg" alt="" />
+          <img src="@/images/logo_big.svg" alt="" />
         </router-link>
       </div>
       <ul class="nav__container__inner mobile-menu">

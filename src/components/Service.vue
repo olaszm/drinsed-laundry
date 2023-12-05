@@ -1,7 +1,7 @@
 <template>
   <div class="service">
     <div class="service__logo">
-      <img :src="require(`@/assets/${logo}`)" :alt="title" />
+      <img :src="require(`@/images/${logo}`)" :alt="title" />
     </div>
     <div class="service__details">
       <h3>{{ title }}</h3>

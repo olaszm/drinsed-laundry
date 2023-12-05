@@ -292,7 +292,7 @@ export default {
       data.set("delivery_date", this.activeDeliveryTime.date);
       data.set("items", JSON.stringify(this.cart));
 
-      let res = await fetch(`${process.env.VUE_APP_URL}/website/homes`, {
+      let res = await fetch(`${process.env.VUE_APP_URL}website/homes`, {
         method: "POST",
         body: data,
       });
@@ -397,7 +397,7 @@ export default {
 @import "@/styles/_variables.scss";
 
 .checkout {
-  background: url("../assets/checkout-bg.svg") no-repeat;
+  background: url("../images/checkout-bg.svg") no-repeat;
   background-position: bottom;
   background-size: 100%;
   position: relative;

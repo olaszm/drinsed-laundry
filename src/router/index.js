@@ -61,8 +61,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/FAQ.vue"),
+    component: () => import(/* webpackChunkName: "about" */ "../views/FAQ.vue"),
   },
   {
     path: "/privacy",
@@ -79,7 +78,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/Covid.vue"),
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Covid.vue"),
   },
   {
     path: "/404",
@@ -89,6 +89,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ "../views/404.vue"),
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import(/* webpackChunkName: "about" */ "../views/404.vue"),
+  },
 ];
 
 const router = new VueRouter({
@@ -96,7 +101,7 @@ const router = new VueRouter({
     if (to.hash) {
       return {
         selector: to.hash,
-        behavior: 'smooth',
+        behavior: "smooth",
       };
     } else {
       return new Promise((resolve) => {
@@ -110,6 +115,5 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
 
 export default router;

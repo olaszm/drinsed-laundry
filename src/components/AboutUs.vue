@@ -1,7 +1,7 @@
 <template>
   <section class="about">
     <div class="about__inner wrapper">
-      <img class="logo" src="@/assets/logo_big.svg" alt="logo" />
+      <img class="logo" src="@/images/logo_big.svg" alt="logo" />
       <div class="about__inner__content">
         <h2>About Us</h2>
         <p>
@@ -11,7 +11,7 @@
           with timeslots to suit you.
         </p>
         <div class="cofounder-card">
-          <img src="@/assets/founder.svg" alt="Co-Founder Naima Iqbal" />
+          <img src="@/images/founder.svg" alt="Co-Founder Naima Iqbal" />
           <div>
             <h3>Naima Iqbal</h3>
             <p>Co-Founder</p>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="stamp">
-      <img src="@/assets/stamp.svg" alt="certified cleaners stamp" />
+      <img src="@/images/stamp.svg" alt="certified cleaners stamp" />
     </div>
   </section>
 </template>

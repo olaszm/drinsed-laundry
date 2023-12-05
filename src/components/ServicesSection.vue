@@ -30,7 +30,7 @@
             </router-link>
           </div>
           <img
-            :src="require(`../assets/${activeService.details_img}`)"
+            :src="require(`../images/${activeService.details_img}`)"
             alt="Laundry Logo"
           />
         </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <img :src="require(`@/assets/${img}`)" alt />
-    <img :src="require(`@/assets/${hoverImg}`)" alt />
+    <img :src="require(`@/images/${img}`)" alt />
+    <img :src="require(`@/images/${hoverImg}`)" alt />
     <p>{{ text }}</p>
     <h3>{{ title }}</h3>
   </div>
