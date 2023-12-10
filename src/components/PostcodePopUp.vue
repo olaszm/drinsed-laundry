@@ -1,18 +1,11 @@
 <template>
   <transition name="fade">
-    <div
-      v-show="isPostCodePopUpOpen"
-      class="popup"
-      @click.self="setisPostcodePopUpOpen(false)"
-    >
+    <div v-show="isPostCodePopUpOpen" class="popup" @click.self="setisPostcodePopUpOpen(false)">
       <div class="popup__inner wrapper">
         <div class="popup__inner__container">
           <h3>Please enter a postcode to continue</h3>
           <div class="form-container">
-            <PostCodeInput inputName="#postcode-popup" />
-            <BaseButton @click.native="proceedToPCheckout">
-              <span slot="text">Proceed to payment</span>
-            </BaseButton>
+            <PostCodeInput inputName="#postcode-popup" @submit="proceedToPCheckout" buttonText="Proceed to payment" />
           </div>
         </div>
       </div>
@@ -23,10 +16,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import PostCodeInput from "@/components/PostCodeInput";
-import BaseButton from "@/components/BaseButton";
 export default {
   components: {
-    BaseButton,
     PostCodeInput,
   },
   data() {
@@ -56,7 +47,12 @@ export default {
   computed: {
     ...mapState(["location", "postCodeError", "isPostCodePopUpOpen"]),
   },
-  mounted() {
+  watch: {
+    isPostCodePopUpOpen(newValue) {
+      if (newValue === true) {
+        this.setPostCodeError({})
+      }
+    }
   }
 };
 </script>
@@ -68,6 +64,7 @@ export default {
 .fade-leave-active {
   transition: opacity 0.3s;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
@@ -85,6 +82,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+
   &__inner {
     min-height: 200px;
     max-height: 250px;
@@ -94,8 +92,10 @@ export default {
     background-color: #fff;
     display: grid;
     align-items: center;
+
     &__container {
       padding: 2rem 1rem;
+
       .form-container {
         margin: 1.5rem 0;
         padding: 0.3em;
@@ -104,11 +104,14 @@ export default {
         align-items: center;
         justify-content: space-between;
         border-radius: 4px;
+
         @media (max-width: $mobile) {
           flex-direction: column;
+
           div {
             margin-right: 0;
           }
+
           button {
             margin: 1rem 0 0 0;
             width: 100%;

@@ -116,13 +116,16 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  console.log({ to, from });
-  if (to.name !== "pricing" && process.env.VUE_APP_SERVICES_ON == 'False') {
-    next();
-  } else {
-    next("/");
-  }
-});
+if(process.env.VUE_APP_SERVICES_ON == 'False') {
+  router.beforeEach((to, from, next) => {
+    console.log({ to, from });
+    if (to.name !== "pricing") {
+      next();
+    } else {
+      next("/");
+    }
+  });
+
+}
 
 export default router;

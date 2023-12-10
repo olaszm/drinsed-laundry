@@ -18,22 +18,23 @@ export default new Vuex.Store({
     cart: [],
     postCodeSuggestions: [],
     location: {
-      lat: "",
-      lon: "",
-      postCode: "",
-      landmark: "",
-      city: "",
-      country: "",
-      formatedAddress: "",
+      latitude: 51.529521,
+      longitude: -0.6641495,
+      postcode: "SL1 7BG",
+      town_or_city: "Slough",
+      country: "England",
+      line_1: "10 The Green",
+      county: "Berkshire",
+      formatedAddress: "10 The Green, Burnham, Slough, Berkshire",
     },
     postCodeError: {
       type: "",
       msg: "",
     },
     details: {
-      name: "",
-      email: "",
-      phone: "",
+      name: "asdasd",
+      email: "martin1olasz@gmasdm.com",
+      phone: "07517237891",
       address: "",
       pickup: {
         slot: "",
@@ -170,7 +171,9 @@ export default new Vuex.Store({
           }
         );
         // TODO: Check response here
-        await res.json();
+        const resp = await res.json();
+
+        return resp;
       } catch (error) {
         const { name } = error;
 
@@ -229,12 +232,14 @@ export default new Vuex.Store({
         const { suggestions } = data;
 
         if (suggestions) commit("SET_POSTCODE_SUGGESTIONS", suggestions);
+
+        return undefined;
       } catch (error) {
-        console.log("Something went wrong", error);
+        return error;
       }
     },
 
-    async pickAddress({ commit, dispatch }, { id }) {
+    async pickAddress({ commit }, { id }) {
       if (!id) return;
 
       try {
@@ -252,7 +257,7 @@ export default new Vuex.Store({
             town_or_city,
             line_1,
             county,
-            formatedAddress,
+            formatted_address,
           } = data;
 
           let location = {
@@ -263,12 +268,12 @@ export default new Vuex.Store({
             country,
             line_1,
             county,
-            formatedAddress,
+            formatedAddress:
+              formatted_address?.filter((data) => data !== "").join(", ") ?? [],
           };
 
-          console.log(formatedAddress);
           commit("SET_LOCATION", location);
-          dispatch("checkPostCode", postcode);
+          return location;
         }
       } catch (error) {
         console.log("Something went wrong", error);
@@ -288,6 +293,54 @@ export default new Vuex.Store({
           let item = document.querySelector(`${hash}`);
           item.scrollIntoView({ behavior: "smooth" });
         }, 300);
+      }
+    },
+    getTimeZone() {
+      const cookies = document.cookie
+        .split(";")
+        .find((v) => v.includes("TimeZone"));
+      const timeZone = cookies.match(/=.*/)[0].substring(1);
+      return timeZone;
+    },
+    async getPickupTimes({ dispatch }, payload) {
+      try {
+        const timeZone = await dispatch("getTimeZone");
+        const resp = await fetch(
+          `${process.env.VUE_APP_URL}/api/v1/pickup_time?time_zone=${timeZone}&postcode=${payload}}`
+        );
+        const { response } = await resp.json();
+        const { data } = response;
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
+    async getDeliveryTimes({ dispatch }, payload) {
+      const timeZone = await dispatch("getTimeZone");
+
+      try {
+        const resp = await fetch(
+          `${process.env.VUE_APP_URL}/api/v1/delivery_time?time_zone=${timeZone}&postcode=${payload}}`
+        );
+        const { response } = await resp.json();
+        const { data } = response;
+
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
+
+    async getPickUpAndDeliveryTime({ dispatch }, payload) {
+      try {
+        const promises = await Promise.all([
+          dispatch("getPickupTimes", payload),
+          dispatch("getDeliveryTimes", payload),
+        ]);
+
+        return [promises, undefined];
+      } catch (error) {
+        return [undefined, error];
       }
     },
   },

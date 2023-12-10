@@ -24,14 +24,8 @@
         </ul>
 
         <div v-if="hasFunctionalityFeatureFlag" class="hero__content__zipform">
-          <PostCodeInput inputName="#postcode-header" />
-          <BaseButton class="btn-secondary" @click.native="sendZipCode">
-            <span slot="text">Book a Service</span>
-          </BaseButton>
+          <PostCodeInput inputName="#postcode-header" @submit="sendZipCode" />
         </div>
-        <p v-if="postCodeError && !location" :class="postCodeError.type">
-          {{ postCodeError.msg }}
-        </p>
 
         <div class="hero__content__apps">
           <SocialButtons />
@@ -49,14 +43,12 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import PostCodeInput from "@/components/PostCodeInput";
-import BaseButton from "@/components/BaseButton";
 import SocialButtons from "@/components/SocialButtons"
 import heroSectionOne from "../images/hero-section-2.webp";
 
 export default {
   components: {
     SocialButtons,
-    BaseButton,
     PostCodeInput,
   },
   data() {
@@ -130,7 +122,7 @@ export default {
 
 .bg__wrapper {
   position: relative;
-  min-height: 85vh;
+  height: 100vh;
   display: flex;
   align-items: center;
 }
@@ -238,6 +230,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
+    max-width: 435px;
 
     @media (max-width: $mobile) {
       flex-direction: column;
