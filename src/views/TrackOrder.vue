@@ -24,8 +24,8 @@
               <p>
                 {{
                   order.pickup_postcode
-                    ? order.pickup_postcode.toUpperCase()
-                    : ""
+                  ? order.pickup_postcode.toUpperCase()
+                  : ""
                 }}
               </p>
             </div>
@@ -55,17 +55,11 @@
         <div class="track__inner__order">
           <h2>Order Summary</h2>
           <div class="container">
-            <ItemCategory
-              v-for="(category, index) in items"
-              :key="index"
-              :category="category"
-            />
+            <ItemCategory v-for="(category, index) in items" :key="index" :category="category" />
 
             <div class="container__row">
               <h4>Price</h4>
-              <span class="primary-bold primary"
-                >£{{ this.order.order_amount ? formatPrice : 0 }}</span
-              >
+              <span class="primary-bold primary">£{{ this.order.order_amount ? formatPrice : 0 }}</span>
             </div>
           </div>
         </div>
@@ -81,6 +75,19 @@ export default {
   components: { ItemCategory, Banner },
   data() {
     return {
+      statusMap:
+      {
+        0: 'Awaiting Confirmation',
+        1: 'Confirmed',
+        2: 'Pick Up',
+        3: 'Picked Up',
+        4: 'Cleaning',
+        5: 'Ready To Dispatch',
+        6: 'Pick Up From Vendor',
+        7: 'Out For Delivery',
+        8: 'Order Delivered',
+        1001: 'Cancelled'
+      },
       user: {},
       order: {},
       items: {},
@@ -90,25 +97,16 @@ export default {
   computed: {
     formatDate() {
       let date = new Date(this.order.created_at);
-      let formattedDate = `${date.getDate()}-${
-        date.getMonth() + 1
-      }-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+      let formattedDate = `${date.getDate()}-${date.getMonth() + 1
+        }-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
       return formattedDate;
     },
     formatPrice() {
       return Number(this.order.order_amount).toFixed(2);
     },
     formatOrderStatus() {
-      let status = this.order.order_status;
-      let formatedStatus = "";
-      if (status == "1") {
-        formatedStatus = "Service Booked";
-      } else if (status == "2") {
-        formatedStatus = "Order Picked Up";
-      } else if (status == "8") {
-        formatedStatus = "Order Delivered";
-      }
-
+      const status = this.order.order_status;
+      const formatedStatus = this.statusMap[status];
       return formatedStatus;
     },
   },
@@ -126,9 +124,10 @@ export default {
       this.$router.push("/404");
     } else {
       this.$Progress.finish();
-      this.user = data.response.user;
-      this.order = data.response.order;
-      this.items = data.response.items;
+      const { user, order, items } = data.response
+      this.user = user;
+      this.order = order;
+      this.items = items;
     }
   },
 };
@@ -139,11 +138,13 @@ export default {
 
 .track__inner {
   margin: 5rem auto;
+
   h2 {
     margin: 1.5rem 0;
     font-weight: 300;
     font-size: 1.95rem;
     position: relative;
+
     &::after {
       position: absolute;
       content: "";
@@ -155,14 +156,17 @@ export default {
       background: $primary;
     }
   }
+
   &__status,
   &__order,
   &__details {
     width: 100%;
     margin: 0.5rem 2rem;
+
     @media (max-width: $desktop) {
       margin: 0.5rem 0;
     }
+
     h3 {
       font-weight: 400;
     }
@@ -170,6 +174,7 @@ export default {
 
   &__status {
     text-align: center;
+
     h2,
     h3,
     h4 {
@@ -206,10 +211,12 @@ export default {
     min-height: 45px;
     position: relative;
     padding: 0.25em 0;
+
     p {
       width: 100%;
       text-align: left;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -218,13 +225,14 @@ export default {
       width: 100%;
       background-color: lightgrey;
     }
+
     &:last-child::after {
       display: none;
     }
+
     h4 {
       font-weight: 400;
       width: 100%;
     }
   }
-}
-</style>
+}</style>

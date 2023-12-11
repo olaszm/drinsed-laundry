@@ -13,8 +13,6 @@ export default new Vuex.Store({
       isApplied: false,
       discount: 0,
     },
-    isAgreedToTerms: false,
-    isSubscribeChecked: false,
     cart: [],
     postCodeSuggestions: [],
     location: {
@@ -54,12 +52,6 @@ export default new Vuex.Store({
       state.voucher.isApplied = payload.isApplied;
       state.voucher.discount = payload.discount;
     },
-    SET_AGREED_TO_TERMS(state) {
-      state.isAgreedToTerms = !state.isAgreedToTerms;
-    },
-    SET_SUBSCRIBE_CHECKED(state) {
-      state.isSubscribeChecked = !state.isSubscribeChecked;
-    },
     SET_IS_MENU_OPEN(state) {
       state.isMenuOpen = !state.isMenuOpen;
     },
@@ -90,12 +82,6 @@ export default new Vuex.Store({
       payload.discount = (100 - payload.discount) / 100;
       commit("SET_VOUCHER", payload);
     },
-    setAgreedToTerms({ commit }) {
-      commit("SET_AGREED_TO_TERMS");
-    },
-    setIsSubscribeChecked({ commit }) {
-      commit("SET_SUBSCRIBE_CHECKED");
-    },
     setisPostcodePopUpOpen({ commit }, payload) {
       commit("SET_IS_POSTCODE_POPUP_OPEN", payload);
     },
@@ -108,14 +94,14 @@ export default new Vuex.Store({
     toggleMenu({ commit }) {
       commit("SET_IS_MENU_OPEN");
     },
-    loadFromLocalStorage({ commit }) {
-      let items = window.localStorage.getItem("drisdenCart");
+    loadFromsessionStorage({ commit }) {
+      let items = window.sessionStorage.getItem("drisdenCart");
       if (items) {
         commit("UPDATE_CART", JSON.parse(items));
       }
     },
-    saveToLocalStorage({ state }) {
-      window.localStorage.setItem("drisdenCart", JSON.stringify(state.cart));
+    saveTosessionStorage({ state }) {
+      window.sessionStorage.setItem("drisdenCart", JSON.stringify(state.cart));
     },
     isSkipItemInTheCart({ state, dispatch }) {
       const isInCart = state.cart.find(
@@ -140,22 +126,22 @@ export default new Vuex.Store({
           return cartItem;
         });
         commit("UPDATE_CART", newCart);
-        dispatch("saveToLocalStorage");
+        dispatch("saveTosessionStorage");
       } else {
         commit("ADD_ITEM_TO_CART", item);
-        dispatch("saveToLocalStorage");
+        dispatch("saveTosessionStorage");
       }
     },
     emptyCart({ commit, dispatch }) {
       commit("UPDATE_CART", []);
-      dispatch("saveToLocalStorage");
+      dispatch("saveTosessionStorage");
     },
     removeCartItem({ commit, state, dispatch }, item) {
       let newCart = state.cart.filter(
         (cartItem) => cartItem.item_id != item.item_id
       );
       commit("UPDATE_CART", newCart);
-      dispatch("saveToLocalStorage");
+      dispatch("saveTosessionStorage");
     },
     async checkPostCode({ commit }, postCode) {
       let data = new FormData();
@@ -348,13 +334,11 @@ export default new Vuex.Store({
   getters: {
     calculateTotalPrice: (state) => {
       if (state.voucher.isApplied) {
-        return (
-          state.cart
-            .reduce((acc, curr) => {
-              return (acc += curr.price * curr.quantity);
-            }, 0)
-            .toFixed(2) * state.voucher.discount
-        );
+        const totalPrice = state.cart
+          .reduce((acc, curr) => {
+            return (acc += curr.price * curr.quantity);
+          }, 0)
+          return  (totalPrice * state.voucher.discount).toFixed(2)
       } else {
         return state.cart
           .reduce((acc, curr) => {

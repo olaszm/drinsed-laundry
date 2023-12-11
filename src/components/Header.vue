@@ -10,10 +10,7 @@
         <mq-layout :mq="['sm', 'md']">
           <ul class="nav_list nav__mobile">
             <li @click="toggleCart">
-              <i
-                class="fas fa-shopping-cart cart"
-                :data-cartItems="getCartLength || 0"
-              ></i>
+              <i class="fas fa-shopping-cart cart" :data-cartItems="getCartLength || 0"></i>
             </li>
             <li @click="toggleMenu"><i class="fas fa-bars mobile-menu"></i></li>
           </ul>
@@ -29,11 +26,9 @@
             <li>
               <router-link to="/faq">FAQ</router-link>
             </li>
-            <li @click="toggleCart">
-              <i
-                class="fas fa-shopping-cart cart"
-                :data-cartItems="getCartLength || 0"
-              ></i>
+            <li :disabled="isCheckoutOrPaymentPage" :class="{ 'is-disabled': isCheckoutOrPaymentPage }"
+              @click="toggleCart">
+              <i class="fas fa-shopping-cart cart" :data-cartItems="getCartLength || 0"></i>
             </li>
           </ul>
         </mq-layout>
@@ -57,6 +52,9 @@ export default {
         window.innerWidth || 0
       );
       return w <= 768 ? true : false;
+    },
+    isCheckoutOrPaymentPage() {
+      return this.$route.path.includes('payment') || this.$route.path.includes('checkout') 
     },
     hasFunctionalityFeatureFlag() {
       return process.env.VUE_APP_SERVICES_ON === 'True' ?? false
@@ -95,8 +93,10 @@ header {
   img {
     max-height: 55px;
   }
+
   @media (max-width: $desktop) {
     margin-right: 1rem;
+
     img {
       height: 40px;
     }
@@ -109,13 +109,16 @@ header {
   align-items: center;
   list-style: none;
   width: 100%;
+
   li {
     margin-right: 3rem;
     white-space: nowrap;
+
     &:last-child {
       margin-right: 0;
     }
   }
+
   @media (max-width: $desktop) {
     li {
       margin-right: 1rem;
@@ -132,6 +135,7 @@ header {
   position: relative;
   font-size: 1.25rem;
   cursor: pointer;
+
   &::after {
     content: attr(data-cartItems);
     position: absolute;
@@ -147,4 +151,11 @@ header {
     border-radius: 50%;
   }
 }
+
+.is-disabled {
+
+  pointer-events: none;
+  opacity: 0.1;
+}
+
 </style>
