@@ -13,17 +13,16 @@ export default new Vuex.Store({
       isApplied: false,
       discount: 0,
     },
-    isAgreedToTerms: false,
-    isSubscribeChecked: false,
     cart: [],
     postCodeSuggestions: [],
     location: {
-      lat: "",
-      lon: "",
-      postCode: "",
-      landmark: "",
-      city: "",
+      latitude: '',
+      longitude: '',
+      postcode: "",
+      town_or_city: "",
       country: "",
+      line_1: "",
+      county: "",
       formatedAddress: "",
     },
     postCodeError: {
@@ -52,12 +51,6 @@ export default new Vuex.Store({
     SET_VOUCHER(state, payload) {
       state.voucher.isApplied = payload.isApplied;
       state.voucher.discount = payload.discount;
-    },
-    SET_AGREED_TO_TERMS(state) {
-      state.isAgreedToTerms = !state.isAgreedToTerms;
-    },
-    SET_SUBSCRIBE_CHECKED(state) {
-      state.isSubscribeChecked = !state.isSubscribeChecked;
     },
     SET_IS_MENU_OPEN(state) {
       state.isMenuOpen = !state.isMenuOpen;
@@ -89,12 +82,6 @@ export default new Vuex.Store({
       payload.discount = (100 - payload.discount) / 100;
       commit("SET_VOUCHER", payload);
     },
-    setAgreedToTerms({ commit }) {
-      commit("SET_AGREED_TO_TERMS");
-    },
-    setIsSubscribeChecked({ commit }) {
-      commit("SET_SUBSCRIBE_CHECKED");
-    },
     setisPostcodePopUpOpen({ commit }, payload) {
       commit("SET_IS_POSTCODE_POPUP_OPEN", payload);
     },
@@ -107,14 +94,14 @@ export default new Vuex.Store({
     toggleMenu({ commit }) {
       commit("SET_IS_MENU_OPEN");
     },
-    loadFromLocalStorage({ commit }) {
-      let items = window.localStorage.getItem("drisdenCart");
+    loadFromsessionStorage({ commit }) {
+      let items = window.sessionStorage.getItem("drisdenCart");
       if (items) {
         commit("UPDATE_CART", JSON.parse(items));
       }
     },
-    saveToLocalStorage({ state }) {
-      window.localStorage.setItem("drisdenCart", JSON.stringify(state.cart));
+    saveTosessionStorage({ state }) {
+      window.sessionStorage.setItem("drisdenCart", JSON.stringify(state.cart));
     },
     isSkipItemInTheCart({ state, dispatch }) {
       const isInCart = state.cart.find(
@@ -139,22 +126,22 @@ export default new Vuex.Store({
           return cartItem;
         });
         commit("UPDATE_CART", newCart);
-        dispatch("saveToLocalStorage");
+        dispatch("saveTosessionStorage");
       } else {
         commit("ADD_ITEM_TO_CART", item);
-        dispatch("saveToLocalStorage");
+        dispatch("saveTosessionStorage");
       }
     },
     emptyCart({ commit, dispatch }) {
       commit("UPDATE_CART", []);
-      dispatch("saveToLocalStorage");
+      dispatch("saveTosessionStorage");
     },
     removeCartItem({ commit, state, dispatch }, item) {
       let newCart = state.cart.filter(
         (cartItem) => cartItem.item_id != item.item_id
       );
       commit("UPDATE_CART", newCart);
-      dispatch("saveToLocalStorage");
+      dispatch("saveTosessionStorage");
     },
     async checkPostCode({ commit }, postCode) {
       let data = new FormData();
@@ -170,7 +157,9 @@ export default new Vuex.Store({
           }
         );
         // TODO: Check response here
-        await res.json();
+        const resp = await res.json();
+
+        return resp;
       } catch (error) {
         const { name } = error;
 
@@ -229,12 +218,14 @@ export default new Vuex.Store({
         const { suggestions } = data;
 
         if (suggestions) commit("SET_POSTCODE_SUGGESTIONS", suggestions);
+
+        return undefined;
       } catch (error) {
-        console.log("Something went wrong", error);
+        return error;
       }
     },
 
-    async pickAddress({ commit, dispatch }, { id }) {
+    async pickAddress({ commit }, { id }) {
       if (!id) return;
 
       try {
@@ -252,7 +243,7 @@ export default new Vuex.Store({
             town_or_city,
             line_1,
             county,
-            formatedAddress,
+            formatted_address,
           } = data;
 
           let location = {
@@ -263,12 +254,12 @@ export default new Vuex.Store({
             country,
             line_1,
             county,
-            formatedAddress,
+            formatedAddress:
+              formatted_address?.filter((data) => data !== "").join(", ") ?? [],
           };
 
-          console.log(formatedAddress);
           commit("SET_LOCATION", location);
-          dispatch("checkPostCode", postcode);
+          return location;
         }
       } catch (error) {
         console.log("Something went wrong", error);
@@ -290,18 +281,64 @@ export default new Vuex.Store({
         }, 300);
       }
     },
+    getTimeZone() {
+      const cookies = document.cookie
+        .split(";")
+        .find((v) => v.includes("TimeZone"));
+      const timeZone = cookies.match(/=.*/)[0].substring(1);
+      return timeZone;
+    },
+    async getPickupTimes({ dispatch }, payload) {
+      try {
+        const timeZone = await dispatch("getTimeZone");
+        const resp = await fetch(
+          `${process.env.VUE_APP_URL}/api/v1/pickup_time?time_zone=${timeZone}&postcode=${payload}}`
+        );
+        const { response } = await resp.json();
+        const { data } = response;
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
+    async getDeliveryTimes({ dispatch }, payload) {
+      const timeZone = await dispatch("getTimeZone");
+
+      try {
+        const resp = await fetch(
+          `${process.env.VUE_APP_URL}/api/v1/delivery_time?time_zone=${timeZone}&postcode=${payload}}`
+        );
+        const { response } = await resp.json();
+        const { data } = response;
+
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
+
+    async getPickUpAndDeliveryTime({ dispatch }, payload) {
+      try {
+        const promises = await Promise.all([
+          dispatch("getPickupTimes", payload),
+          dispatch("getDeliveryTimes", payload),
+        ]);
+
+        return [promises, undefined];
+      } catch (error) {
+        return [undefined, error];
+      }
+    },
   },
   modules: {},
   getters: {
     calculateTotalPrice: (state) => {
       if (state.voucher.isApplied) {
-        return (
-          state.cart
-            .reduce((acc, curr) => {
-              return (acc += curr.price * curr.quantity);
-            }, 0)
-            .toFixed(2) * state.voucher.discount
-        );
+        const totalPrice = state.cart
+          .reduce((acc, curr) => {
+            return (acc += curr.price * curr.quantity);
+          }, 0)
+          return  (totalPrice * state.voucher.discount).toFixed(2)
       } else {
         return state.cart
           .reduce((acc, curr) => {

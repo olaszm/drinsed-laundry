@@ -32,11 +32,11 @@ export default {
   },
   methdos: {},
   watch: {
-    subscribe() {
-      this.$store.dispatch("setIsSubscribeChecked");
+    subscribe(value) {
+      this.$emit("onSubscribeToggle", value);
     },
-    agreeTerms() {
-      this.$store.dispatch("setAgreedToTerms");
+    agreeTerms(value) {
+      this.$emit("onTermsToggle", value);
     },
   },
 };

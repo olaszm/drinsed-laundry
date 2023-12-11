@@ -1,33 +1,43 @@
 <template>
-  <div>
+  <div class="form-wrapper">
     <div class="form">
       <BaseInput :placeholder="'Enter your post code'" :logo="'marker.svg'" :name="inputName"
         :modelValue="location.formatedAddress" @update:modelValue="willHandlePostcodeInput" :label="'Post Code'"
         @my-focus="handleFocus" />
-      <ul :class="getElementName" v-if="isSuggestionsOpen && postCodeSuggestions.length" class="suggestions">
-        <li v-for="(item, index) of postCodeSuggestions" :key="index" @click.self="willPickAddress(item)">
-          {{ item.address }}
-        </li>
-      </ul>
+
+      <BaseButton :disabled="postCodeError.type === 'error'" class="btn-secondary" @click.native="$emit('submit')">
+        <span slot="text">{{ buttonText }}</span>
+      </BaseButton>
     </div>
-    <div class="error-container">
-      <p v-if="postCodeError" :class="postCodeError.type">
+    <div v-if="postCodeError.msg" class="error-container">
+      <p :class="postCodeError.type">
         {{ postCodeError.msg }}
       </p>
     </div>
+    <ul :class="getElementName" v-if="isSuggestionsOpen && postCodeSuggestions.length" class="suggestions">
+      <li v-for="(item, index) of postCodeSuggestions" :key="index" @click.self="willPickAddress(item)">
+        {{ item.address }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import BaseInput from "@/components/BaseInput";
+import BaseButton from "@/components/BaseButton";
+
 import { mapState, mapActions } from "vuex";
 export default {
   props: {
     inputName: {
       type: String,
     },
+    buttonText: {
+      type: String,
+      default: 'Submit'
+    }
   },
-  components: { BaseInput },
+  components: { BaseInput, BaseButton, },
   data() {
     return {
       isSuggestionsOpen: false
@@ -41,22 +51,54 @@ export default {
     ...mapState(["postCodeSuggestions", "location", "postCodeError"]),
   },
   methods: {
-    ...mapActions(["initGetAddress", "pickAddress"]),
+    ...mapActions(["initGetAddress", "pickAddress", "checkPostCode", 'setPostCodeError']),
     handleFocus() {
       this.isSuggestionsOpen = true
     },
     handleBlur() {
       this.isSuggestionsOpen = false
     },
-    willHandlePostcodeInput(value) {
+    async willHandlePostcodeInput(value) {
       // TODO: Add debounce here
       if (value.length >= 3) {
-        this.initGetAddress(value)
+        const response = await this.initGetAddress(value)
+
+        if (response) {
+          console.log(response)
+          // TODO: uncomment this 
+          // this.setPostCodeError({
+          //   type: 'error',
+          //   msg: 'Something went wrong, try again later!'
+          // })
+        }
+
+        return
       }
 
+
+      this.setPostCodeError({ type: undefined, msg: undefined })
     },
-    willPickAddress(address) {
-      this.pickAddress(address)
+    async willPickAddress(address) {
+      const { postcode } = await this.pickAddress(address)
+
+
+      if (postcode) {
+        const { error } = await this.checkPostCode(postcode)
+
+        if (error) {
+          const { message } = error
+
+          this.setPostCodeError({
+            type: "error",
+            msg: message
+          })
+
+          this.handleBlur()
+
+          return
+        }
+      }
+
       this.handleBlur()
     }
   },
@@ -66,33 +108,36 @@ export default {
 <style lang='scss' scoped>
 @import "@/styles/_variables.scss";
 
-div {
-  width: 100%;
-  margin-right: 1rem;
-}
-
 .form {
-  margin: 0 0.5em;
   width: 100%;
   background-color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 4px;
-  position: relative;
+  gap: 10px;
   // box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
 }
 
+.form-wrapper {
+  position: relative;
+  padding: 0 0.5rem;
+  width: 100%;
+
+}
+
 .error-container {
-  margin-left: 0.5em;
+  margin-top: .5em;
+  width: 100%;
 }
 
 .suggestions {
   position: absolute;
   z-index: 10;
   width: 100%;
-  top: 50px;
+  top: 45px;
   left: 0;
+  right: 0;
   background-color: white;
   max-height: 125px;
   overflow-y: scroll;

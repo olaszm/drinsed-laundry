@@ -41,7 +41,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["toggleCart", "toggleMenu", "loadFromLocalStorage"]),
+    ...mapActions(["toggleCart", "toggleMenu", "loadFromsessionStorage"]),
     closeCart() {
       if (this.isCartOpen) {
         this.toggleCart();
@@ -64,7 +64,7 @@ export default {
       }
     });
 
-    this.loadFromLocalStorage();
+    this.loadFromsessionStorage();
   },
 };
 </script>

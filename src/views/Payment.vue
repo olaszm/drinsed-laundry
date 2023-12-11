@@ -27,17 +27,9 @@
               <div class="basket__container__row">
                 <h4>Voucher</h4>
                 <div class="voucher__container">
-                  <BaseInput
-                    :placeholder="'Voucher'"
-                    :value="voucherInput"
-                    v-model="voucherInput"
-                    label="Voucher"
-                  />
-                  <BaseButton
-                    @click.native="applyVoucher"
-                    class="btn-small"
-                    :disabled="isVoucherLoading || voucher.isApplied"
-                  >
+                  <BaseInput :placeholder="'Voucher'" :modelValue="voucherInput"
+                    @update:modelValue="(v) => voucherInput = v" label="Voucher" />
+                  <BaseButton @click.native="applyVoucher" class="btn-small" :disabled="isVoucherLoading">
                     <span v-if="!voucher.isApplied" slot="text">Apply</span>
                     <span v-else slot="text">Applied</span>
                   </BaseButton>
@@ -61,12 +53,8 @@
                 <h3>Cleaning and Delivery Instructions</h3>
               </div>
               <form action="" class="stripe-form" ref="form"></form>
-              <textarea
-                name="instructions"
-                placeholder="Write here..."
-                aria-label="Instruction Area"
-                v-model="instruction"
-              ></textarea>
+              <textarea name="instructions" placeholder="Write here..." aria-label="Instruction Area"
+                v-model="instruction"></textarea>
               <!-- </div> -->
             </div>
           </div>
@@ -79,17 +67,14 @@
               <h3>Enter card details</h3>
             </div>
             <div class="card" ref="card"></div>
-            <BaseButton
-              class="btn-secondary"
-              @click.native="send"
-              :disabled="isLoading"
-            >
+            <BaseButton class="btn-secondary" @click.native="send" :disabled="isLoading || isPayButtonDisabled">
               <span slot="text" v-if="isLoading">Complete Booking</span>
               <span slot="text" v-else>Complete Booking</span>
             </BaseButton>
           </div>
 
-          <TermsAndConditions :error="termsError" />
+          <TermsAndConditions @onSubscribeToggle="(v) => isSubscribeChecked = v"
+            @onTermsToggle="(v) => isAgreedToTerms = v" :error="termsError" />
         </div>
       </div>
     </div>
@@ -113,6 +98,8 @@ export default {
 
   data() {
     return {
+      isSubscribeChecked: false,
+      isAgreedToTerms: false,
       isLoading: false,
       voucherError: "",
       isVoucherLoading: false,
@@ -145,11 +132,12 @@ export default {
       "location",
       "cart",
       "details",
-      "isAgreedToTerms",
-      "isSubscribeChecked",
       "voucher",
     ]),
     ...mapGetters(["calculateTotalPrice"]),
+    isPayButtonDisabled() {
+      return !this.isAgreedToTerms
+    }
   },
 
   methods: {
@@ -161,8 +149,6 @@ export default {
       hiddenInput.setAttribute("name", "stripeToken");
       hiddenInput.setAttribute("value", token.id);
       form.appendChild(hiddenInput);
-
-      console.log("Token Handler executed");
 
       this.payment(token.id);
     },
@@ -186,6 +172,10 @@ export default {
           this.isVoucherLoading = false;
           this.$Progress.fail();
           this.voucherError = data.error.message;
+          this.setVoucher({
+            isApplied: false,
+            discount: 0
+          })
         } else {
           this.setVoucher({
             isApplied: true,
@@ -197,17 +187,20 @@ export default {
       }
     },
     send() {
-      console.log("Creating Token");
       this.stripe.createToken(this.card).then((result) => {
         if (result.error) {
-          console.log(result.error);
+          const { message } = result.error
+          this.termsError = message;
+
         } else {
           this.stripeTokenHandler(result.token);
         }
       });
     },
     async payment(token) {
+      this.termsError = '';
       let obj = new FormData();
+
 
       obj.set("id", this.$route.params.id);
       obj.set("token", token);
@@ -230,75 +223,59 @@ export default {
       obj.set("longitude", this.location.lon);
       obj.set("instruction", this.instruction);
 
-      if (this.isAgreedToTerms) {
-        if (this.isSubscribeChecked) {
-          this.subscribeToNewsLetter(this.details.email);
-        }
-        this.isLoading = true;
-        this.$Progress.start();
-        let res = await fetch(
-          `${process.env.VUE_APP_URL}/website/homes/create_payment`,
-          {
-            method: "POST",
-            body: obj,
-          }
-        );
-
-        let data = await res.json();
-
-        if (data.error) {
-          this.$Progress.fail();
-          this.isLoading = false;
-          console.log(data.error);
-        } else {
-          this.cart;
-          this.$Progress.finish();
-          this.isLoading = false;
-          let id = data.response.order.id;
-          this.emptyCart();
-
-          let details = {
-            name: "",
-            email: "",
-            phone: "",
-            address: "",
-            pickup: {
-              slot: "",
-              date: "",
-            },
-            delivery: {
-              slot: "",
-              date: "",
-            },
-          };
-          this.$store.commit("SET_LOCATION", {});
-          this.$store.commit("SET_DETAILS", details);
-          this.$router.push(`/track-order/${id}`);
-        }
-      } else {
+      if (!this.isAgreedToTerms) {
         this.termsError = "Please accept our terms and conditions!";
+        return
       }
-      //   let obj = {
-      //     id: this.$route.params.id,
-      //     token: token,
-      //     amount: this.calculateTotalPrice,
-      //     net_amount: (this.calculateTotalPrice * 100).toFixed(0),
-      //     discount_percentage: 0,
-      //     discount_amount: 0.0,
-      //     full_name: this.details.name,
-      //     email: this.details.email,
-      //     phone: this.details.phone,
-      //     country_code: "+44",
-      //     address: this.details.address,
-      //     landmark: this.location.city,
-      //     postcode: this.location.postCode,
-      //     pickup_date: this.details.pickup.date,
-      //     pickup_time: this.details.pickup.slot,
-      //     deliver_date: this.details.delivery.date,
-      //     deliver_time: this.details.delivery.slot,
-      //     latitude: this.location.lat,
-      //     longitude: this.location.lon,
-      //   };
+
+      if (this.isSubscribeChecked) {
+        this.subscribeToNewsLetter(this.details.email);
+      }
+
+      this.isLoading = true;
+      this.$Progress.start();
+      let res = await fetch(
+        `${process.env.VUE_APP_URL}/website/homes/create_payment`,
+        {
+          method: "POST",
+          body: obj,
+        }
+      );
+
+      let data = await res.json();
+
+      if (data.error) {
+        this.$Progress.fail();
+        this.isLoading = false;
+        const { message } = data.error
+        this.termsError = message;
+
+
+      } else {
+        this.cart;
+        this.$Progress.finish();
+        this.isLoading = false;
+        let id = data.response.order.id;
+        this.emptyCart();
+
+        let details = {
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          pickup: {
+            slot: "",
+            date: "",
+          },
+          delivery: {
+            slot: "",
+            date: "",
+          },
+        };
+        this.$store.commit("SET_LOCATION", {});
+        this.$store.commit("SET_DETAILS", details);
+        this.$router.push(`/track-order/${id}`);
+      }
     },
   },
 
@@ -316,6 +293,7 @@ export default {
       .catch((err) => {
         console.error(err);
       });
+
   },
 };
 </script>
@@ -328,6 +306,7 @@ export default {
   background-position: bottom;
   background-size: 100%;
   position: relative;
+
   &::after {
     content: "";
     position: absolute;
@@ -335,11 +314,9 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.7) 0%,
-      rgba(247, 247, 247, 0) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(247, 247, 247, 0) 100%);
   }
 }
 
@@ -359,11 +336,13 @@ export default {
   background-color: white;
   border-radius: 4px;
   overflow-y: hidden;
+
   h2 {
     margin: 1rem 0;
     font-weight: 300;
     font-size: 1.95rem;
     position: relative;
+
     &::after {
       position: absolute;
       content: "";
@@ -375,9 +354,11 @@ export default {
       background: $primary;
     }
   }
+
   @media (max-width: $tablet) {
     max-width: 90%;
   }
+
   @media (max-width: $mobile) {
     max-width: 95%;
   }
@@ -390,9 +371,11 @@ export default {
   // min-height: 250px;
   height: 100%;
   border-radius: 4px;
+
   @media (max-width: $desktop) {
     flex-direction: column;
   }
+
   &__row {
     display: flex;
     align-items: center;
@@ -401,19 +384,23 @@ export default {
     min-height: 65px;
     padding: 0 1rem;
     border-bottom: 1px solid darken($light-grey, 5);
+
     .items-text {
       align-self: flex-start;
       padding: 1em 0;
     }
+
     &:last-child {
       border-bottom: none;
     }
+
     .basket__items {
       display: flex;
       width: 65%;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       .item {
         display: flex;
         width: 100%;
@@ -423,14 +410,17 @@ export default {
         // border-bottom: 1px solid grey;
       }
     }
+
     h4 {
       font-weight: 300;
     }
+
     p,
     span {
       font-weight: 400;
     }
   }
+
   textarea {
     min-height: 120px;
     border-radius: 4px;
@@ -452,9 +442,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   &:last-child {
     margin-left: 2rem;
   }
+
   @media (max-width: $desktop) {
     &:last-child {
       margin-top: 1rem;
@@ -468,9 +460,11 @@ export default {
   align-items: center;
   justify-content: flex-start;
   padding: 0.5em;
+
   h3 {
     font-weight: 400;
   }
+
   i {
     margin-right: 0.75em;
     color: white;
@@ -490,13 +484,16 @@ export default {
   justify-content: space-between;
   margin-left: 1rem;
   height: 40px;
+
   .container {
     margin: 0 1rem;
     height: 100%;
   }
+
   input {
     border: 1px solid darken($light-grey, 5);
   }
+
   button {
     margin-left: 0.5em;
   }
@@ -509,6 +506,7 @@ export default {
   border-radius: 4px;
   border: 1px solid darken($light-grey, 5);
   text-align: center;
+
   button {
     height: 45px;
     margin: 1rem 0;
@@ -528,14 +526,17 @@ export default {
   background-color: white;
   margin-right: 1.5rem;
   position: relative;
+
   &:focus {
     border: 1px solid $primary;
     outline: none;
   }
+
   &--focus {
     border: 1px solid $primary;
     outline: none;
   }
+
   &--invalid {
     border: 1px solid $error;
   }

@@ -16,12 +16,7 @@
           <div class="services__inner__error-container" v-if="error">
             <p class="error">{{ this.error }}</p>
           </div>
-          <ServiceCategory
-            v-for="(service, index) in services"
-            :key="index"
-            :service="service"
-            :tabindex="index"
-          />
+          <ServiceCategory v-for="(service, index) in services" :key="index" :service="service" :tabindex="index" />
           <div class="services__inner__next-container">
             <BaseButton @click.native="skipItems" v-if="getCartLength == 0">
               <span slot="text">Skip Item Selection</span>
@@ -113,7 +108,7 @@ export default {
       let newData = data.response.data.map((item, i) => {
         item.image = images[i];
         return item;
-      });
+      }).filter(item => item.image !== undefined);
 
       this.services = newData;
     } catch (error) {
@@ -131,11 +126,13 @@ export default {
 
 .services__inner {
   min-height: 400px;
+
   &__error-container {
     text-align: center;
     width: 100%;
     margin: 2rem 0;
   }
+
   &__next-container {
     max-width: 350px;
     margin: 2rem auto;
@@ -143,6 +140,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     p {
       margin-top: 1em;
       font-size: 0.9rem;
