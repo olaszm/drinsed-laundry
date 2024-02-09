@@ -185,7 +185,7 @@ export default {
   flex-direction: column;
   display: flex;
   justify-content: center;
-  max-width: 60%;
+  max-width: 75%;
 
   @media (max-width: $tablet) {
     max-width: 80%;
@@ -196,13 +196,10 @@ export default {
   }
 
   h1 {
+    white-space: nowrap;
     margin: 0.25em 0;
-    font-size: 3.5rem;
+    font-size: calc(1.5rem + 2vw);
     font-weight: 300;
-
-    @media (max-width: $mobile) {
-      font-size: 2.25rem;
-    }
   }
 
   p {
