@@ -137,9 +137,14 @@ export default {
     right: 0;
     bottom: 0;
     object-fit: cover;
-    object-position: left top;
+    object-position: right top;
     opacity: 0;
     transition: opacity 400ms ease-in-out;
+
+    @media (max-width: $mobile) {
+      object-position: 60% 0;
+    }
+
   }
 }
 
@@ -186,6 +191,7 @@ export default {
   display: flex;
   justify-content: center;
   max-width: 75%;
+  white-space: nowrap;
 
   @media (max-width: $tablet) {
     max-width: 80%;
@@ -193,13 +199,20 @@ export default {
 
   @media (max-width: $mobile) {
     max-width: 100%;
+    text-shadow: 1px 1px 8px rgba(71, 71, 71, 0.247);
   }
 
   h1 {
     white-space: nowrap;
     margin: 0.25em 0;
-    font-size: calc(1.5rem + 2vw);
+    font-size: 2.75rem;
     font-weight: 300;
+
+    @media (max-width: $mobile) {
+      font-size: 1.65rem;
+      font-weight: 400;
+      white-space: nowrap;
+    }
   }
 
   p {
