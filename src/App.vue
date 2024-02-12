@@ -73,6 +73,7 @@ export default {
 @import "@/styles/main.scss";
 
 .router-link-exact-active {
+  outline: none;
   color: $primary;
   font-weight: 400;
 }
