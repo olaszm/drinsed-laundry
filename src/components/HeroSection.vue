@@ -203,6 +203,7 @@ export default {
   }
 
   h1 {
+    white-space: nowrap;
     margin: 0.25em 0;
     font-size: 2.75rem;
     font-weight: 300;
