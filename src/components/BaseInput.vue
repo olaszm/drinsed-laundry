@@ -1,10 +1,11 @@
 <template>
   <div>
+    <label class="input-label" v-if="showInputLabel">{{ placeholder }}</label>
     <div class="container">
       <img :src="require(`@/images/${logo}`)" alt="place-holder-logo" v-if="logo" />
-      <input @blur="$emit('blur')" :readonly="readonly" :pattern="pattern" :aria-label="label" :type="type" :placeholder="placeholder"
-        :value="modelValue"  @focus="$emit('my-focus', name)" @input="$emit('update:modelValue', $event.target.value)"
-        :id="name" :maxlength="max" />
+      <input @blur="$emit('blur')" :readonly="readonly" :pattern="pattern" :aria-label="label" :type="type"
+        :placeholder="placeholder" :value="modelValue" @focus="$emit('my-focus', name)"
+        @input="$emit('update:modelValue', $event.target.value)" :id="name" :maxlength="max" />
     </div>
     <p class="error" v-if="error">{{ error }}</p>
   </div>
@@ -37,6 +38,10 @@ export default {
     pattern: {},
     error: {},
     max: {},
+    showInputLabel: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -54,6 +59,11 @@ div {
   p {
     margin: 0.5rem 0;
   }
+}
+
+.input-label {
+  display: inline-flex;
+  margin-bottom: .5rem;
 }
 
 .container {

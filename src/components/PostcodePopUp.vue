@@ -5,7 +5,7 @@
         <div class="popup__inner__container">
           <h3>Please enter a postcode to continue</h3>
           <div class="form-container">
-            <PostCodeInput inputName="#postcode-popup" @submit="proceedToPCheckout" buttonText="Proceed to payment" />
+            <PostCodeInput inputName="#postcode-popup" @submit="proceedToCheckout" buttonText="Proceed to payment" />
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default {
       "setPostCodeError",
       "setisPostcodePopUpOpen",
     ]),
-    proceedToPCheckout() {
+    proceedToCheckout() {
       if (!this.location.formatedAddress) {
         this.setPostCodeError({
           type: "error",
