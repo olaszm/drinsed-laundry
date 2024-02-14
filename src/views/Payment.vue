@@ -15,7 +15,7 @@
                 <h4 class="items-text">Items</h4>
                 <div class="basket__items">
                   <div class="item" v-for="(item, index) in cart" :key="index">
-                    <p>{{ item.quantity }}X {{ item.item_name }}</p>
+                    <p>{{ item.quantity }}x {{ item.item_name }}</p>
                     <span>£{{ item.price }}</span>
                   </div>
                 </div>
@@ -372,6 +372,15 @@ export default {
   height: 100%;
   border-radius: 4px;
 
+  h4 {
+      font-weight: 300;
+    }
+
+    p,
+    span {
+      font-weight: 400;
+    }
+
   @media (max-width: $desktop) {
     flex-direction: column;
   }
@@ -407,18 +416,15 @@ export default {
         align-items: center;
         justify-content: space-between;
         margin: 0.5em 0;
+        p {
+          font-weight: 200;
+        }
+
         // border-bottom: 1px solid grey;
       }
     }
 
-    h4 {
-      font-weight: 300;
-    }
 
-    p,
-    span {
-      font-weight: 400;
-    }
   }
 
   textarea {

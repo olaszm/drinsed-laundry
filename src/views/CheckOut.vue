@@ -19,24 +19,26 @@
 
                 <form action>
                   <div class="form__row">
-                    <BaseInput :placeholder="'Full name'" :type="'text'" @update:modelValue="(v) => details.name = v"
-                      :modelValue="details.name" :error="errors.name" label="Name" />
-                    <BaseInput :placeholder="'Phone'" type="tel" @update:modelValue="(v) => details.phone = v"
-                      :modelValue="details.phone" :error="errors.phone" label="Phone number" pattern="^\d{11}$"
-                      max="11" />
+                    <BaseInput showInputLabel :placeholder="'Full name'" :type="'text'"
+                      @update:modelValue="(v) => details.name = v" :modelValue="details.name" :error="errors.name"
+                      label="Name" />
+                    <BaseInput showInputLabel :placeholder="'Phone'" type="tel"
+                      @update:modelValue="(v) => details.phone = v" :modelValue="details.phone" :error="errors.phone"
+                      label="Phone number" pattern="^\d{11}$" max="11" />
                   </div>
 
-                  <BaseInput :placeholder="'Email'" :type="'email'" @update:modelValue="(v) => details.email = v"
-                    :modelValue="details.email" :error="errors.email" label="Email" />
-                  <BaseInput :placeholder="'Address Line 1'" :type="'text'"
+                  <BaseInput showInputLabel :placeholder="'Email'" :type="'email'"
+                    @update:modelValue="(v) => details.email = v" :modelValue="details.email" :error="errors.email"
+                    label="Email" />
+                  <BaseInput showInputLabel :placeholder="'Address Line 1'" :type="'text'"
                     @update:modelValue="(v) => location.line_1 = v" :modelValue="location.line_1" :error="errors.address"
                     label="Address Line 1" />
-                  <BaseInput :placeholder="'Address Line 2'" :type="'text'"
+                  <BaseInput showInputLabel :placeholder="'Address Line 2'" :type="'text'"
                     @update:modelValue="(v) => location.landmark = v" :modelValue="location.landmark"
                     label="Address Line 2" />
-                  <BaseInput readonly :placeholder="'Post Code'" :type="'text'" :modelValue="location.postcode"
-                    :name="'checkoutPostCode'" :error="errors.postCode" label="Post Code" @change.native="sendZipCode"
-                    @input.native="sendZipCode" />
+                  <BaseInput showInputLabel readonly :placeholder="'Post Code'" :type="'text'"
+                    :modelValue="location.postcode" :name="'checkoutPostCode'" :error="errors.postCode" label="Post Code"
+                    @change.native="sendZipCode" @input.native="sendZipCode" />
                 </form>
                 <p :class="postCodeError.type">{{ postCodeError.msg }}</p>
               </div>
