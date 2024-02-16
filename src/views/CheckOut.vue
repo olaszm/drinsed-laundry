@@ -512,6 +512,7 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
 
   .collection,
   .delivery {
@@ -528,12 +529,20 @@ form {
     }
 
     h3 {
+      margin-bottom: .5rem;
       font-weight: 400;
+    }
+
+    p {
+      z-index: 1;
+      background: white;
+      position: sticky;
+      top: 0;
     }
   }
 
   .delivery {
-    margin: 0.75rem 0;
+    margin: 1.75rem 0;
   }
 
   @media (max-width: $tablet) {

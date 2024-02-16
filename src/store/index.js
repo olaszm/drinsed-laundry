@@ -18,7 +18,7 @@ export default new Vuex.Store({
     location: {
       latitude: '',
       longitude: '',
-      postcode: "",
+      postcode: "sl1",
       town_or_city: "",
       country: "",
       line_1: "",
