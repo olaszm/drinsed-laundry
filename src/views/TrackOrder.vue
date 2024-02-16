@@ -64,6 +64,15 @@
           </div>
         </div>
       </div>
+
+      <div class="track__inner__footnote">
+        <h4>
+          Stay in the loop with your order by downloading our iOS app today!
+        </h4>
+        <a target="_blank" href="https://apps.apple.com/us/app/drinsed/id1509482600">
+          <img src="@/images/app_store.svg" alt="App Play Store Logo" />
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -181,6 +190,16 @@ export default {
       font-weight: 300;
     }
   }
+
+  &__footnote {
+    margin: 2rem 0;
+    text-align: center;
+
+    a {
+      display: inline-flex;
+      margin: 1rem 0;
+    }
+  }
 }
 
 .track__inner__container {
@@ -235,4 +254,5 @@ export default {
       width: 100%;
     }
   }
-}</style>
+}
+</style>

@@ -63,10 +63,10 @@ export default {
       this.error = "";
       let orderItem = {
         category_id: 5,
-        category_name: "Skip Items",
+        category_name: "Bundle of items",
         detergent: 0,
         item_id: 1,
-        item_name: "Skip Items",
+        item_name: "Bundle of items",
         price: 20.0,
         quantity: 1,
       };
