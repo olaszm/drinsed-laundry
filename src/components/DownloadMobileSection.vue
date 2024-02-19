@@ -9,7 +9,7 @@
       />
       <div class="download__inner__content">
         <h3>Download The App Now!</h3>
-        <p>The Drinsed app is now avaiable on all iOS and android devices.</p>
+        <p>The Drinsed is App is now available in the Apple Store.</p>
         <div>
            <a href="https://apps.apple.com/us/app/drinsed/id1509482600">
               <img src="@/images/app_store.svg" alt="App Play Store Logo" />

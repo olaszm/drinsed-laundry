@@ -509,6 +509,7 @@ form {
 .time__container {
   display: flex;
   width: 100%;
+  gap: 2.5rem;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
