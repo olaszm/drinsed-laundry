@@ -64,7 +64,7 @@ export default {
   justify-content: space-between;
   padding: 0 0.5em;
   min-height: 44px;
-  margin: 0.5em 0;
+  margin: 0.5em .75rem;
   &:focus-within{
   background-color: $primary; 
   color: white;;
