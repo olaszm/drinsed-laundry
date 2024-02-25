@@ -47,7 +47,7 @@
               <h2>Time Slot</h2>
               <div class="time__container">
                 <div class="collection">
-                  <h3>Collection Time:</h3>
+                  <h3>Collection Time</h3>
 
                   <div class="loader" v-if="isLoading">
                     <ClipLoader :size="65" :sizeUnit="'px'" :color="'#13b0a7'" />
@@ -55,15 +55,15 @@
                   <div class="collection__times" v-else>
                     <div v-for="(item, index) in pickUpTimes" :key="index">
                       <p>{{ item.subtitle }}</p>
-                      <TimeSlotCheckBox v-for="(slot, slotIndex) in item.time" :key="slotIndex" :date="item.title"
-                        :hour="slot.hour" :value="`${item.value}-${slot.title}`" :name="'pickUpTime'"
-                        v-model="activePickUpTime" :active="activePickUpTime"
-                        @click.native="() => getDeliveryTimes(deliveryTimes)" />
+                        <TimeSlotCheckBox v-for="(slot, slotIndex) in item.time" :key="slotIndex" :date="item.title"
+                          :hour="slot.hour" :value="`${item.value}-${slot.title}`" :name="'pickUpTime'"
+                          v-model="activePickUpTime" :active="activePickUpTime"
+                          @click.native="() => getDeliveryTimes(deliveryTimes)" />
                     </div>
                   </div>
                 </div>
                 <div class="delivery">
-                  <h3>Delivery Time:</h3>
+                  <h3>Delivery Time</h3>
                   <div class="loader" v-if="isLoading">
                     <ClipLoader :size="65" :sizeUnit="'px'" :color="'#13b0a7'" />
                   </div>
@@ -458,7 +458,6 @@ form {
     margin-right: 0.75em;
     color: white;
     background: $primary;
-    // padding: 0.5em;
     height: 35px;
     width: 35px;
     display: grid;
@@ -494,7 +493,7 @@ form {
 }
 
 .collection__times {
-  height: 200px;
+  height: 275px;
   overflow-y: scroll;
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -504,6 +503,11 @@ form {
   &::-webkit-scrollbar {
     display: none;
   }
+
+
+  padding-bottom: 1.75rem;
+  border-radius: 4px;
+  background: white;
 }
 
 .time__container {
@@ -518,8 +522,10 @@ form {
   .collection,
   .delivery {
     width: 100%;
-    max-height: 200px;
+    height: 100%;
     overflow-y: hidden;
+    border: 1px solid darken($light-grey, 5);
+    border-radius: 4px;
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
@@ -530,15 +536,23 @@ form {
     }
 
     h3 {
-      margin-bottom: .5rem;
       font-weight: 400;
+      padding: 1rem .45rem;
     }
 
     p {
+      font-size: 0.9rem;
       z-index: 1;
       background: white;
       position: sticky;
-      top: 0;
+      top: -0rem;
+      padding: .25rem .75rem;
+      padding-top: 0;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0px 7px 3px -3px rgba(0, 0, 0, .1);
+      border: 0;
+      width: 100%;
     }
   }
 

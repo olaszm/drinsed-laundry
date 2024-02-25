@@ -29,6 +29,7 @@ Set the following env vars
 VUE_APP_URL=<api-url> # http://localhost:3000/
 VUE_APP_PK_STRIPE_KEY=<stripe-public-key>
 VUE_APP_GETADDRESS_KEY=<getaddress-api-key>
+VUE_APP_SERVICES_ON=Boolean    # To control wether the pricing page is available
 ```
 
 [GetAddress API](https://getaddress.io/)
