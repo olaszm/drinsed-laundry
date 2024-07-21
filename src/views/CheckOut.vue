@@ -19,26 +19,66 @@
 
                 <form action>
                   <div class="form__row">
-                    <BaseInput showInputLabel :placeholder="'Full name'" :type="'text'"
-                      @update:modelValue="(v) => details.name = v" :modelValue="details.name" :error="errors.name"
-                      label="Name" />
-                    <BaseInput showInputLabel :placeholder="'Phone'" type="tel"
-                      @update:modelValue="(v) => details.phone = v" :modelValue="details.phone" :error="errors.phone"
-                      label="Phone number" pattern="^\d{11}$" max="11" />
+                    <BaseInput
+                      showInputLabel
+                      :placeholder="'Full name'"
+                      :type="'text'"
+                      @update:modelValue="(v) => (details.name = v)"
+                      :modelValue="details.name"
+                      :error="errors.name"
+                      label="Name"
+                    />
+                    <BaseInput
+                      showInputLabel
+                      :placeholder="'Phone'"
+                      type="tel"
+                      @update:modelValue="(v) => (details.phone = v)"
+                      :modelValue="details.phone"
+                      :error="errors.phone"
+                      label="Phone number"
+                      pattern="^\d{11}$"
+                      max="11"
+                    />
                   </div>
 
-                  <BaseInput showInputLabel :placeholder="'Email'" :type="'email'"
-                    @update:modelValue="(v) => details.email = v" :modelValue="details.email" :error="errors.email"
-                    label="Email" />
-                  <BaseInput showInputLabel :placeholder="'Address Line 1'" :type="'text'"
-                    @update:modelValue="(v) => location.line_1 = v" :modelValue="location.line_1" :error="errors.address"
-                    label="Address Line 1" />
-                  <BaseInput showInputLabel :placeholder="'Address Line 2'" :type="'text'"
-                    @update:modelValue="(v) => location.landmark = v" :modelValue="location.landmark"
-                    label="Address Line 2" />
-                  <BaseInput showInputLabel readonly :placeholder="'Post Code'" :type="'text'"
-                    :modelValue="location.postcode" :name="'checkoutPostCode'" :error="errors.postCode" label="Post Code"
-                    @change.native="sendZipCode" @input.native="sendZipCode" />
+                  <BaseInput
+                    showInputLabel
+                    :placeholder="'Email'"
+                    :type="'email'"
+                    @update:modelValue="(v) => (details.email = v)"
+                    :modelValue="details.email"
+                    :error="errors.email"
+                    label="Email"
+                  />
+                  <BaseInput
+                    showInputLabel
+                    :placeholder="'Address Line 1'"
+                    :type="'text'"
+                    @update:modelValue="(v) => (location.line_1 = v)"
+                    :modelValue="location.line_1"
+                    :error="errors.address"
+                    label="Address Line 1"
+                  />
+                  <BaseInput
+                    showInputLabel
+                    :placeholder="'Address Line 2'"
+                    :type="'text'"
+                    @update:modelValue="(v) => (location.landmark = v)"
+                    :modelValue="location.landmark"
+                    label="Address Line 2"
+                  />
+                  <BaseInput
+                    showInputLabel
+                    readonly
+                    :placeholder="'Post Code'"
+                    :type="'text'"
+                    :modelValue="location.postcode"
+                    :name="'checkoutPostCode'"
+                    :error="errors.postCode"
+                    label="Post Code"
+                    @change.native="sendZipCode"
+                    @input.native="sendZipCode"
+                  />
                 </form>
                 <p :class="postCodeError.type">{{ postCodeError.msg }}</p>
               </div>
@@ -50,39 +90,74 @@
                   <h3>Collection Time</h3>
 
                   <div class="loader" v-if="isLoading">
-                    <ClipLoader :size="65" :sizeUnit="'px'" :color="'#13b0a7'" />
+                    <ClipLoader
+                      :size="65"
+                      :sizeUnit="'px'"
+                      :color="'#13b0a7'"
+                    />
                   </div>
                   <div class="collection__times" v-else>
                     <div v-for="(item, index) in pickUpTimes" :key="index">
                       <p>{{ item.subtitle }}</p>
-                        <TimeSlotCheckBox v-for="(slot, slotIndex) in item.time" :key="slotIndex" :date="item.title"
-                          :hour="slot.hour" :value="`${item.value}-${slot.title}`" :name="'pickUpTime'"
-                          v-model="activePickUpTime" :active="activePickUpTime"
-                          @click.native="() => getDeliveryTimes(deliveryTimes)" />
+                      <TimeSlotCheckBox
+                        v-for="(slot, slotIndex) in item.time"
+                        :key="slotIndex"
+                        :date="item.title"
+                        :hour="slot.hour"
+                        :value="`${item.value}-${slot.title}`"
+                        :name="'pickUpTime'"
+                        v-model="activePickUpTime"
+                        :active="activePickUpTime"
+                        @click.native="() => getDeliveryTimes(deliveryTimes)"
+                      />
                     </div>
                   </div>
                 </div>
                 <div class="delivery">
                   <h3>Delivery Time</h3>
                   <div class="loader" v-if="isLoading">
-                    <ClipLoader :size="65" :sizeUnit="'px'" :color="'#13b0a7'" />
+                    <ClipLoader
+                      :size="65"
+                      :sizeUnit="'px'"
+                      :color="'#13b0a7'"
+                    />
                   </div>
                   <div class="collection__times" id="delivery-container" v-else>
-                    <div v-for="(item, index) in filteredDeliveryTimes" :key="index">
+                    <div
+                      v-for="(item, index) in filteredDeliveryTimes"
+                      :key="index"
+                    >
                       <p>{{ item.subtitle }}</p>
-                      <TimeSlotCheckBox v-for="(slot, slotIndex) in item.time" :key="slotIndex" :date="item.title"
-                        :hour="slot.hour" :value="`${item.value}-${slot.title}`" :name="'deliveryTime'"
-                        v-model="activeDeliveryTime" :active="activeDeliveryTime" tabindex="0" />
+                      <TimeSlotCheckBox
+                        v-for="(slot, slotIndex) in item.time"
+                        :key="slotIndex"
+                        :date="item.title"
+                        :hour="slot.hour"
+                        :value="`${item.value}-${slot.title}`"
+                        :name="'deliveryTime'"
+                        v-model="activeDeliveryTime"
+                        :active="activeDeliveryTime"
+                        tabindex="0"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div class="errors" v-if="collectionError">
-                <p class="error" v-for="(i, index) in collectionError" :key="index">
+                <p
+                  class="error"
+                  v-for="(i, index) in collectionError"
+                  :key="index"
+                >
                   {{ i }}
                 </p>
               </div>
             </div>
+          </div>
+          <div class="service-errors error">
+            <p class="error">
+              {{ serviceError }}
+            </p>
           </div>
           <div class="button__container">
             <BaseButton class="btn-secondary" @click.native="backToPricing">
@@ -129,6 +204,7 @@ export default {
       activeDeliveryTime: {},
       filteredDeliveryTimes: [],
       collectionError: [],
+      serviceError: "",
     };
   },
   methods: {
@@ -139,7 +215,7 @@ export default {
       "setPostCodeError",
       "removeCartItem",
       "isSkipItemInTheCart",
-      "getPickUpAndDeliveryTime"
+      "getPickUpAndDeliveryTime",
     ]),
     sendZipCode() {
       if (!this.location.postcode) {
@@ -202,6 +278,7 @@ export default {
     },
 
     async createOrder() {
+      this.serviceError = "";
       let data = new FormData();
       data.set("postal_code", this.location.postcode);
       data.set("pickup_location", this.location.formatedAddress);
@@ -226,7 +303,11 @@ export default {
       let response = await res.json();
 
       if (response.error) {
-        console.log(response);
+        const { error } = response;
+        const { message } = error;
+        if (message) {
+          this.serviceError = message;
+        }
       } else {
         let details = {
           name: this.details.name,
@@ -265,56 +346,67 @@ export default {
       }
       currentPickUpTime.setHours(currentPickUpTime.getHours() + 48);
 
-      return currentPickUpTime
+      return currentPickUpTime;
     },
     getDeliveryTimes(deliveryTimes) {
-      if (!deliveryTimes || !deliveryTimes.length) return []
+      if (!deliveryTimes || !deliveryTimes.length) return [];
       let delivery = deliveryTimes.map((item) => {
-        item.value = new Date(item.value.toString().split("-").reverse().join("-"));
+        item.value = new Date(
+          item.value
+            .toString()
+            .split("-")
+            .reverse()
+            .join("-")
+        );
         return item;
       });
 
-      // Calculate delivery 
-      const nextDeliveryTime = this.calculateNextDeliverTime(this.activePickUpTime.value)
-      let validDeliveryTimes = delivery.filter((item) => item.value > nextDeliveryTime);
+      // Calculate delivery
+      const nextDeliveryTime = this.calculateNextDeliverTime(
+        this.activePickUpTime.value
+      );
+      let validDeliveryTimes = delivery.filter(
+        (item) => item.value > nextDeliveryTime
+      );
 
       this.filteredDeliveryTimes = validDeliveryTimes;
-      console.log(validDeliveryTimes)
-      return validDeliveryTimes
+      return validDeliveryTimes;
     },
   },
   computed: {
     ...mapState(["location", "postCodeError", "cart", "details"]),
     ...mapGetters(["calculateTotalPrice"]),
     line_2() {
-      return `${this.location.town_or_city} ${this.location.county} ${this.location.country}`
-    }
+      return `${this.location.town_or_city} ${this.location.county} ${this.location.country}`;
+    },
   },
   async mounted() {
     this.isLoading = true;
 
     if (!this.location.postcode) {
       this.isLoading = false;
-      this.backToPricing()
-      return
+      this.backToPricing();
+      return;
     }
 
-    const [data, error] = await this.getPickUpAndDeliveryTime(this.location.postcode)
+    const [data, error] = await this.getPickUpAndDeliveryTime(
+      this.location.postcode
+    );
 
     if (error) {
       // TODO: Do error handling
       this.isLoading = false;
-      return
+      return;
     }
 
     if (data && data.length) {
-      const [pickupTimes, deliveryTimes] = data
+      const [pickupTimes, deliveryTimes] = data;
 
-      this.pickUpTimes = pickupTimes
-      this.deliveryTimes = deliveryTimes
+      this.pickUpTimes = pickupTimes;
+      this.deliveryTimes = deliveryTimes;
 
       if (pickupTimes && pickupTimes.length) {
-        const firstPicKUpTime = pickupTimes[0]
+        const firstPicKUpTime = pickupTimes[0];
         this.activePickUpTime = {
           date: firstPicKUpTime.title,
           slot: firstPicKUpTime?.time[0]?.hour,
@@ -322,10 +414,9 @@ export default {
         };
       }
 
-      this.getDeliveryTimes(deliveryTimes)
+      this.getDeliveryTimes(deliveryTimes);
 
-
-      // Scroll to view      
+      // Scroll to view
       let div = document.querySelector("#delivery-container");
       if (div) {
         div.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -352,9 +443,11 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg,
-        rgba(255, 255, 255, 0.7) 0%,
-        rgba(247, 247, 247, 0) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(247, 247, 247, 0) 100%
+    );
   }
 }
 
@@ -504,7 +597,6 @@ form {
     display: none;
   }
 
-
   padding-bottom: 1.75rem;
   border-radius: 4px;
   background: white;
@@ -537,7 +629,7 @@ form {
 
     h3 {
       font-weight: 400;
-      padding: 1rem .45rem;
+      padding: 1rem 0.45rem;
     }
 
     p {
@@ -546,11 +638,11 @@ form {
       background: white;
       position: sticky;
       top: -0rem;
-      padding: .25rem .75rem;
+      padding: 0.25rem 0.75rem;
       padding-top: 0;
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
-      box-shadow: 0px 7px 3px -3px rgba(0, 0, 0, .1);
+      box-shadow: 0px 7px 3px -3px rgba(0, 0, 0, 0.1);
       border: 0;
       width: 100%;
     }
@@ -594,5 +686,10 @@ form {
       width: 100%;
     }
   }
+}
+
+.service-errors {
+  margin: 0.5rem 0;
+  color: $error;
 }
 </style>
